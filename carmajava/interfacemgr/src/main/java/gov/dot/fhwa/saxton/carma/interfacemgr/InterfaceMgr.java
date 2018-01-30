@@ -93,68 +93,68 @@ public class  InterfaceMgr extends SaxtonBaseNode implements IInterfaceMgr {
 
             @Override
             public void onNewMessage(cav_msgs.DriverStatus msg) {
-            	try {
-	                DriverInfo info = new DriverInfo();
-	                info.setName(msg.getName());
-	                switch (msg.getStatus()) {
-	                case DriverStatus.OFF:
-	                    info.setState(DriverState.OFF);
-	                    break;
-	                case DriverStatus.DEGRADED:
-	                    info.setState(DriverState.DEGRADED);
-	                    break;
-	                case DriverStatus.FAULT:
-	                    info.setState(DriverState.FAULT);
-	                    break;
-	                case DriverStatus.OPERATIONAL:
-	                    info.setState(DriverState.OPERATIONAL);
-	                    break;
-	                default:
-	                    info.setState(DriverState.FAULT);
-	                }
-	                info.setCan(msg.getCanBus());
-	                info.setSensor(msg.getSensor());
-	                info.setPosition(msg.getPosition());
-	                info.setComms(msg.getComms());
-	                info.setController(msg.getController());
+                try {
+                    DriverInfo info = new DriverInfo();
+                    info.setName(msg.getName());
+                    switch (msg.getStatus()) {
+                    case DriverStatus.OFF:
+                        info.setState(DriverState.OFF);
+                        break;
+                    case DriverStatus.DEGRADED:
+                        info.setState(DriverState.DEGRADED);
+                        break;
+                    case DriverStatus.FAULT:
+                        info.setState(DriverState.FAULT);
+                        break;
+                    case DriverStatus.OPERATIONAL:
+                        info.setState(DriverState.OPERATIONAL);
+                        break;
+                    default:
+                        info.setState(DriverState.FAULT);
+                    }
+                    info.setCan(msg.getCanBus());
+                    info.setSensor(msg.getSensor());
+                    info.setPosition(msg.getPosition());
+                    info.setComms(msg.getComms());
+                    info.setController(msg.getController());
 
-	                //add the new driver info to our database
-	                worker_.handleNewDriverStatus(info);
-            	}catch (Exception e) {
-            		handleException(e);
-            	}
+                    //add the new driver info to our database
+                    worker_.handleNewDriverStatus(info);
+                }catch (Exception e) {
+                    handleException(e);
+                }
             }
         });
         
         //message listener for system alerts coming from other nodes
         Subscriber<cav_msgs.SystemAlert> alertListener = connectedNode.newSubscriber("system_alert", cav_msgs.SystemAlert._TYPE);
         alertListener.addMessageListener(new MessageListener<SystemAlert>() {
-        	
-        	@Override
-        	public void onNewMessage(cav_msgs.SystemAlert msg) {
-        	    if (msg == null) {
-        	        log_.warn("SHUTDOWN", "InterfaceMgr received a NULL system alert. Ignoring.");
-        	        return;
+            
+            @Override
+            public void onNewMessage(cav_msgs.SystemAlert msg) {
+                if (msg == null) {
+                    log_.warn("SHUTDOWN", "InterfaceMgr received a NULL system alert. Ignoring.");
+                    return;
                 }
-        		try {
-        		
-	        		//if the alert is a FATAL or SHUTDOWN, then proceed to shut down this node
-	        		if (msg.getType() == AlertSeverity.FATAL.getVal()  ||
-	        			msg.getType() == AlertSeverity.SHUTDOWN.getVal()) {
-	        			
-	        			String alertType;
-	        			if (msg.getType() == AlertSeverity.FATAL.getVal()) {
-	        				alertType = "FATAL - ";
-	        			}else {
-	        				alertType = "SHUTDOWN - ";
-	        			}
-	        			log_.warn("SHUTDOWN", "InterfaceMgr SHUTTING DOWN after receipt of alert: " + alertType + msg.getDescription());
-	        			connectedNode.shutdown();
-	        		}
-            	}catch (Exception e) {
-            		handleException(e);
-            	}
-        	}
+                try {
+                
+                    //if the alert is a FATAL or SHUTDOWN, then proceed to shut down this node
+                    if (msg.getType() == AlertSeverity.FATAL.getVal()  ||
+                        msg.getType() == AlertSeverity.SHUTDOWN.getVal()) {
+                        
+                        String alertType;
+                        if (msg.getType() == AlertSeverity.FATAL.getVal()) {
+                            alertType = "FATAL - ";
+                        }else {
+                            alertType = "SHUTDOWN - ";
+                        }
+                        log_.warn("SHUTDOWN", "InterfaceMgr SHUTTING DOWN after receipt of alert: " + alertType + msg.getDescription());
+                        connectedNode.shutdown();
+                    }
+                }catch (Exception e) {
+                    handleException(e);
+                }
+            }
         });
         
         //create a message listener for the bond messages coming from drivers (sendSystemAlert)
@@ -165,6 +165,34 @@ public class  InterfaceMgr extends SaxtonBaseNode implements IInterfaceMgr {
         //publish the system not ready message
         publishSystemAlert(AlertSeverity.NOT_READY, "System is starting up...", null);
 
+        ///// service publisher /////
+
+        //handler for the get_drivers_with_capabilities service
+        ServiceServer<cav_srvs.GetDriversWithCapabilitiesRequest, cav_srvs.GetDriversWithCapabilitiesResponse> driverCapSvr = connectedNode
+                .newServiceServer("get_drivers_with_capabilities", cav_srvs.GetDriversWithCapabilities._TYPE,
+                        new ServiceResponseBuilder<cav_srvs.GetDriversWithCapabilitiesRequest, GetDriversWithCapabilitiesResponse>() {
+
+                            @Override
+                            public void build(cav_srvs.GetDriversWithCapabilitiesRequest request,
+                                    cav_srvs.GetDriversWithCapabilitiesResponse response) {
+
+                                try {
+                                    log_.debug("DRIVER", "InterfaceMgr.driverCapSvr: received request with "
+                                            + request.getCapabilities().size() + " capabilities listed.");
+    
+                                    //figure out which drivers match the request
+                                    List<String> res = worker_.getDrivers(request.getCapabilities());
+                                    log_.debug("DRIVER", "InterfaceMgr.driverCapSvr: returning a list of " + res.size()
+                                            + " matching drivers.");
+    
+                                    //formulate the service response
+                                    response.setDriverData(res);
+                                }catch (Exception e) {
+                                    handleException(e);
+                                }
+                            }
+                        });
+                        
         // This CancellableLoop will be canceled automatically when the node shuts down
         mainLoop_ = new CancellableLoop() {
 
@@ -194,34 +222,6 @@ public class  InterfaceMgr extends SaxtonBaseNode implements IInterfaceMgr {
 
         };
         connectedNode.executeCancellableLoop(mainLoop_);
-
-        ///// service publisher /////
-
-        //handler for the get_drivers_with_capabilities service
-        ServiceServer<cav_srvs.GetDriversWithCapabilitiesRequest, cav_srvs.GetDriversWithCapabilitiesResponse> driverCapSvr = connectedNode
-                .newServiceServer("get_drivers_with_capabilities", cav_srvs.GetDriversWithCapabilities._TYPE,
-                        new ServiceResponseBuilder<cav_srvs.GetDriversWithCapabilitiesRequest, GetDriversWithCapabilitiesResponse>() {
-
-                            @Override
-                            public void build(cav_srvs.GetDriversWithCapabilitiesRequest request,
-                                    cav_srvs.GetDriversWithCapabilitiesResponse response) {
-
-                            	try {
-	                                log_.debug("DRIVER", "InterfaceMgr.driverCapSvr: received request with "
-	                                        + request.getCapabilities().size() + " capabilities listed.");
-	
-	                                //figure out which drivers match the request
-	                                List<String> res = worker_.getDrivers(request.getCapabilities());
-	                                log_.debug("DRIVER", "InterfaceMgr.driverCapSvr: returning a list of " + res.size()
-	                                        + " matching drivers.");
-	
-	                                //formulate the service response
-	                                response.setDriverData(res);
-                            	}catch (Exception e) {
-                            		handleException(e);
-                            	}
-                            }
-                        });
 
     }//onSaxtonStart
 
