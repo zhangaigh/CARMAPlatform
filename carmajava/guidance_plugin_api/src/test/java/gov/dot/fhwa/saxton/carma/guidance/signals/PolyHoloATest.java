@@ -54,8 +54,6 @@ public class PolyHoloATest {
     }
       
     PolyHoloA s = new PolyHoloA(0.1);
-    //Optional<Signal<Double>> speedCmdSignal = speedCmdPipeline
-    //.apply(new Signal<>(computeActualTimeGap(distGap(distToFrontVehicle), currentSpeed, frontVehicleSpeed)));
 
     s.apply(new Signal<>(1.0));
     s.apply(new Signal<>(2.0));
