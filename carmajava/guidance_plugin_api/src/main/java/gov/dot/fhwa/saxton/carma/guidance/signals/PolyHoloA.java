@@ -26,6 +26,8 @@ import java.util.Optional;
  * Uses Holoborodko filters for first and second derivatives, the first derivative using
  * 15 historical points, and the second derivative using 11 historical points.  The
  * Holoborodko method is used courtesy of Pavel Holoborodko (http://www.holoborodko.com/pavel).
+ * 
+ * TODO: Update to use the timestamp instead of fixed timestep size
  *
  */
 public class PolyHoloA implements Filter<Double> {
