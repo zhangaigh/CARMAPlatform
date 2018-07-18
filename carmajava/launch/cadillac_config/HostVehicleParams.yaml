@@ -2,14 +2,14 @@
 # Defines the ros parameters which define the host vehicle's characteristics
 
 # String: Host vehicle color
-vehicle_color: 'GREEN'
+vehicle_color: 'WHITE'
 
 # Double: Host vehicle height
 # Units: Meters
 vehicle_height: 1.7018
 
 # String: Host vehicle’s Unique ID that will be used in mobility messages.
-vehicle_id: 'DOT-GREEN'
+vehicle_id: 'DOT-WHITE'
 
 # Double: Host vehicle length
 # Units: Meters

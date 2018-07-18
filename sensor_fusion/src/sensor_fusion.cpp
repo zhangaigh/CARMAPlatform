@@ -201,10 +201,6 @@ int SensorFusionApplication::run() {
     pnh_->param<std::string>("ned_frame_name",ned_frame_name_,"ned");
     pnh_->param<bool>("use_interface_mgr",use_interface_mgr_,false);
 
-    // TODO remove once the truck pinpoint altitude values are correct
-    pnh_->param<bool>("use_altitude_override",use_altitude_override_, false);
-    pnh_->param<double>("altitude_override",altitude_override_, 0.0);
-
     bool use_sim_time;
     nh_->param<bool>("/use_sim_time", use_sim_time, false);
 
@@ -326,15 +322,19 @@ int SensorFusionApplication::run() {
     ros::Rate r(20);
     while(ros::ok())
     {
+        ROS_DEBUG("Processing Callbacks");
         ros::spinOnce();
-
+        ROS_DEBUG("Processing Objects");
         while(!objects_cb_q_.empty())
         {
+            
             objects_cb(objects_cb_q_.front().second,objects_cb_q_.front().first);
             objects_cb_q_.pop_front();
         }
 
+        ROS_DEBUG("Publish Topics");
         publish_updates();
+        ROS_DEBUG("Done Loop");
         r.sleep();
     }
 
@@ -464,6 +464,8 @@ void SensorFusionApplication::publish_updates() {
     if(!velocity_map_.empty())
         velocity_pub_.publish(velocity_map_.begin()->second);
 
+    ROS_DEBUG("GPS Pushed");
+
     cav_msgs::ConnectedVehicleList msg;
     std_msgs::Header header;
     header.frame_id = body_frame_name_;
@@ -471,8 +473,11 @@ void SensorFusionApplication::publish_updates() {
 
     vehicles_pub_.publish(msg);
 
+    ROS_DEBUG("Before publish Objects");
+
     if(tracker_->process() > 0 && !tracker_->tracked_sensor->objects.empty())
     {
+        ROS_DEBUG("Publishing all Objects");
         cav_msgs::ExternalObjectList list;
         list.header.stamp = ros::Time::fromBoost(tracker_->tracked_sensor->time_stamp);
         list.header.frame_id = inertial_frame_name_;
@@ -686,15 +691,8 @@ void SensorFusionApplication::heading_cb(const ros::MessageEvent<cav_msgs::Headi
 }
 
 void SensorFusionApplication::navsatfix_cb(const ros::MessageEvent<sensor_msgs::NavSatFix> &event) {
-
     std::string name = event.getPublisherName();
-    // TODO remove once Truck pinpoint is fixed
-    boost::shared_ptr<sensor_msgs::NavSatFix> msg = event.getMessage();
-    if (use_altitude_override_) {
-        msg.get()->altitude = altitude_override_;
-    }
-
-    navsatfix_map_[name] = msg;
+    navsatfix_map_[name] = event.getMessage();
 }
 
 void SensorFusionApplication::odom_cb(const ros::MessageEvent<nav_msgs::Odometry> &event) {
