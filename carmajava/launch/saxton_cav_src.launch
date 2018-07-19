@@ -213,10 +213,10 @@
     </group>
 
     <!-- Sensor Fusion Package -->
-    <group ns="$(arg SF_NS)">
+    <!-- <group ns="$(arg SF_NS)"> -->
 
       <!-- Sensor Fusion Node -->
-      <node pkg="sensor_fusion" type="sensor_fusion_node" name="sensor_fusion">
+      <!-- <node pkg="sensor_fusion" type="sensor_fusion_node" name="sensor_fusion">
 
         <rosparam command="load" file="$(arg PARAM_DIR)/SensorFusion.yaml"/>
 
@@ -229,7 +229,27 @@
         <remap from="get_drivers_with_capabilities"
                to="/$(arg TOP_NS)/$(arg INTR_NS)/get_drivers_with_capabilities"/>
       </node>
-    </group>
+    </group> -->
+
+  <!-- TODO remove these remappings and uncommentout sensor fusion -->
+    <remap to="/saxton_cav/drivers/pin_point_application/position/heading"
+           from="heading"/>
+
+    <remap to="/saxton_cav/drivers/pin_point_application/position/nav_sat_fix"
+        from="nav_sat_fix"/>
+
+    <remap to="/saxton_cav/drivers/pin_point_application/position/odometry"
+        from="odometry"/>
+
+    <remap to="/saxton_cav/drivers/pin_point_application/position/velocity"
+        from="velocity"/>
+
+    <remap to="/saxton_cav/drivers/srx_objects/f_lrr/sensor/objects"
+      from="objects"/>
+
+    <!-- <remap from="/saxton_cav/drivers/delphi_esr/sensor/objects"
+      to="/saxton_cav/sensor_fusion/filtered/tracked_objects"/> -->
+
 
     <!-- Roadway Package -->
     <group ns="$(arg RD_NS)">
@@ -246,7 +266,7 @@
                to="/$(arg TOP_NS)/system_alert"/>
         <remap from="map"
                to="/$(arg TOP_NS)/$(arg MSG_NS)/map"/>
-        <remap from="heading"
+        <!-- <remap from="heading"
                to="/$(arg TOP_NS)/$(arg SF_NS)/filtered/heading"/>
         <remap from="nav_sat_fix"
                to="/$(arg TOP_NS)/$(arg SF_NS)/filtered/nav_sat_fix"/>
@@ -255,7 +275,7 @@
         <remap from="objects"
                to="/$(arg TOP_NS)/$(arg SF_NS)/filtered/tracked_objects"/>
         <remap from="velocity"
-               to="/$(arg TOP_NS)/$(arg SF_NS)/filtered/velocity"/>
+               to="/$(arg TOP_NS)/$(arg SF_NS)/filtered/velocity"/> -->
         <remap from="get_transform"
                to="/$(arg TOP_NS)/$(arg RD_NS)/get_transform"/>
         <remap from="route_state"
@@ -288,8 +308,8 @@
                to="/$(arg TOP_NS)/system_alert"/>
         <remap from="tim"
                to="/$(arg TOP_NS)/$(arg MSG_NS)/tim"/>
-        <remap from="nav_sat_fix"
-               to="/$(arg TOP_NS)/$(arg SF_NS)/filtered/nav_sat_fix"/>
+        <!-- <remap from="nav_sat_fix"
+               to="/$(arg TOP_NS)/$(arg SF_NS)/filtered/nav_sat_fix"/> -->
         <remap from="get_transform"
                to="/$(arg TOP_NS)/$(arg RD_NS)/get_transform"/>
       </node>
@@ -359,16 +379,16 @@
         <remap from="vehicle_id"
                to="/$(arg TOP_NS)/vehicle_id"/>
         <!-- Topics and Services -->
-        <remap from="heading"
+        <!-- <remap from="heading"
                to="/$(arg TOP_NS)/$(arg SF_NS)/filtered/heading"/>
         <remap from="nav_sat_fix"
                to="/$(arg TOP_NS)/$(arg SF_NS)/filtered/nav_sat_fix"/>
         <remap from="velocity"
-               to="/$(arg TOP_NS)/$(arg SF_NS)/filtered/velocity"/>
+               to="/$(arg TOP_NS)/$(arg SF_NS)/filtered/velocity"/> -->
         <remap from="get_transform"
                to="/$(arg TOP_NS)/$(arg RD_NS)/get_transform"/>
-        <remap from="acceleration"
-               to="/$(arg TOP_NS)/$(arg SF_NS)/filtered/acceleration"/>
+        <!-- <remap from="acceleration"
+               to="/$(arg TOP_NS)/$(arg SF_NS)/filtered/acceleration"/> -->
 
         <!-- Trajectory Thread-->
         <remap from="get_drivers_with_capabilities"
@@ -411,8 +431,8 @@
              to="/$(arg TOP_NS)/system_alert"/>
       <remap from="get_system_version"
              to="/$(arg TOP_NS)/$(arg GUIDE_NS)/get_system_version"/>
-      <remap from="nav_sat_fix"
-             to="/$(arg TOP_NS)/$(arg SF_NS)/filtered/nav_sat_fix"/>
+      <!-- <remap from="nav_sat_fix"
+             to="/$(arg TOP_NS)/$(arg SF_NS)/filtered/nav_sat_fix"/> -->
       <remap from="get_available_routes"
              to="/$(arg TOP_NS)/$(arg RT_NS)/get_available_routes"/>
       <remap from="set_active_route"

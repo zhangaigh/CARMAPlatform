@@ -166,7 +166,7 @@ private:
     void update_subscribed_services();
 
 
-    ros::Publisher odom_pub_, navsatfix_pub_, heading_pub_, velocity_pub_, objects_pub_, vehicles_pub_;
+    ros::Publisher odom_pub_, navsatfix_pub_, heading_pub_, velocity_pub_, objects_pub_;
 
     /**
      * @brief Publishes the filtered updates

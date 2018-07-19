@@ -317,7 +317,6 @@ int SensorFusionApplication::run() {
     velocity_pub_   = pnh.advertise<geometry_msgs::TwistStamped>("velocity",100);
     heading_pub_    = pnh.advertise<cav_msgs::HeadingStamped>("heading",100);
     objects_pub_    = pnh.advertise<cav_msgs::ExternalObjectList>("tracked_objects",100);
-    vehicles_pub_   = pnh.advertise<cav_msgs::ConnectedVehicleList>("tracked_vehicles",100);
 
     ros::Rate r(20);
     while(ros::ok())
@@ -466,13 +465,6 @@ void SensorFusionApplication::publish_updates() {
 
     ROS_DEBUG("GPS Pushed");
 
-    cav_msgs::ConnectedVehicleList msg;
-    std_msgs::Header header;
-    header.frame_id = body_frame_name_;
-    header.stamp = ros::Time::now();
-
-    vehicles_pub_.publish(msg);
-
     ROS_DEBUG("Before publish Objects");
 
     if(tracker_->process() > 0 && !tracker_->tracked_sensor->objects.empty())
@@ -535,7 +527,7 @@ void SensorFusionApplication::objects_cb(const cav_msgs::ExternalObjectListConst
                 continue;
         }catch(cav::ExtrapolationException e)
         {
-            ROS_WARN_STREAM(e.what());
+            ROS_WARN_STREAM("Twist buffer exception: " << e.what());
             twist_history_buffer_.getLatest(body_frame_name_,twistStamped);
         }
 
@@ -569,6 +561,7 @@ void SensorFusionApplication::objects_cb(const cav_msgs::ExternalObjectListConst
 }
 
 void SensorFusionApplication::bsm_cb(const cav_msgs::BSMConstPtr &msg) {
+    return; // TODO remove
     ROS_DEBUG_STREAM_NAMED("bsm_logger","Received bsm message: " << msg);
     if(heading_map_.empty() || navsatfix_map_.empty())
     {
