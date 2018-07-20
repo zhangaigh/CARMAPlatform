@@ -244,11 +244,11 @@
     <remap to="/saxton_cav/drivers/pin_point_application/position/velocity"
         from="velocity"/>
 
-    <remap to="/saxton_cav/drivers/srx_objects/f_lrr/sensor/objects"
-      from="objects"/>
+    <!-- <remap to="/saxton_cav/drivers/srx_objects/f_lrr/sensor/objects"
+      from="objects"/> -->
 
-    <!-- <remap from="/saxton_cav/drivers/delphi_esr/sensor/objects"
-      to="/saxton_cav/sensor_fusion/filtered/tracked_objects"/> -->
+    <remap to="/saxton_cav/drivers/delphi_esr/sensor/objects"
+      from="objects"/>
 
 
     <!-- Roadway Package -->

@@ -3600,7 +3600,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -3616,7 +3616,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -3632,7 +3632,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -3648,7 +3648,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -3664,7 +3664,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -3680,7 +3680,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -3696,7 +3696,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -3712,7 +3712,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -3728,7 +3728,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -3744,7 +3744,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -3760,7 +3760,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -3776,7 +3776,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -3792,7 +3792,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -3808,7 +3808,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -3824,7 +3824,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -3840,7 +3840,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -3856,7 +3856,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -3872,7 +3872,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -3888,7 +3888,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -3904,7 +3904,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -3920,7 +3920,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -3936,7 +3936,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -3952,7 +3952,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -3968,7 +3968,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -3984,7 +3984,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4000,7 +4000,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4016,7 +4016,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4032,7 +4032,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4048,7 +4048,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4064,7 +4064,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4080,7 +4080,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4096,7 +4096,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4112,7 +4112,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4128,7 +4128,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4144,7 +4144,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4160,7 +4160,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4176,7 +4176,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4192,7 +4192,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4208,7 +4208,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4224,7 +4224,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4240,7 +4240,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4256,7 +4256,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4272,7 +4272,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4288,7 +4288,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4304,7 +4304,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4320,7 +4320,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4336,7 +4336,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4352,7 +4352,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4368,7 +4368,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4384,7 +4384,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4400,7 +4400,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4416,7 +4416,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4432,7 +4432,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4448,7 +4448,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4464,7 +4464,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4480,7 +4480,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4496,7 +4496,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4512,7 +4512,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4528,7 +4528,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4544,7 +4544,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4560,7 +4560,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4576,7 +4576,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4592,7 +4592,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4608,7 +4608,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4624,7 +4624,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4640,7 +4640,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4656,7 +4656,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4672,7 +4672,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4688,7 +4688,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4704,7 +4704,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4720,7 +4720,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4736,7 +4736,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4752,7 +4752,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4768,7 +4768,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4784,7 +4784,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4800,7 +4800,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4816,7 +4816,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4832,7 +4832,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4848,7 +4848,7 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
@@ -4864,5 +4864,5 @@ waypoints:
     leftMostLaneMarking: SOLID_WHITE
     rightMostLaneMarking: SOLID_WHITE
     disabledGuidanceAlgorithms: [''] 
-    requiredLaneIndex: 0
+    requiredLaneIndex: 1
 

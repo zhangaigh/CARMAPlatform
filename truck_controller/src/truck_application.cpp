@@ -66,12 +66,12 @@ void TruckApplication::initialize()
 
     set_PidParam_.setF(k_p_,k_i_,k_d_);
 
-    set_LightControl_.Flashing     = TruckDBWController::GenericStatusEnum::On;
-    set_LightControl_.LeftBlinker  = TruckDBWController::GenericStatusEnum::On;
-    set_LightControl_.RightBlinker = TruckDBWController::GenericStatusEnum::On;
-    set_LightControl_.TakeDown     = TruckDBWController::GenericStatusEnum::On;
-    set_LightControl_.GreenFlash   = TruckDBWController::GenericStatusEnum::On;
-    set_LightControl_.GreenSolid   = TruckDBWController::GenericStatusEnum::On;
+    set_LightControl_.Flashing     = TruckDBWController::GenericStatusEnum::Off;
+    set_LightControl_.LeftBlinker  = TruckDBWController::GenericStatusEnum::Off;
+    set_LightControl_.RightBlinker = TruckDBWController::GenericStatusEnum::Off;
+    set_LightControl_.TakeDown     = TruckDBWController::GenericStatusEnum::Off;
+    set_LightControl_.GreenFlash   = TruckDBWController::GenericStatusEnum::Off;
+    set_LightControl_.GreenSolid   = TruckDBWController::GenericStatusEnum::Off;
 
     // Initialize Send Timers
     auto time_now = ros::Time::now();

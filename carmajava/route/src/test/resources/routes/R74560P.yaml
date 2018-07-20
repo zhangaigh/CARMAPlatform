@@ -2,23 +2,6 @@
 routeName: R74560P
 maxJoinDistance: 0
 waypoints:
-  # Mike added
-  - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
-    location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
-      latitude: 39.465647
-      longitude: -76.163560
-      altitude: 0.0
-    minCrossTrack: -25.0
-    maxCrossTrack: 25.0
-    lowerSpeedLimit: 0
-    upperSpeedLimit: 35
-    laneCount: 2
-    interiorLaneMarkings: BROKEN_YELLOW
-    leftMostLaneMarking: SOLID_WHITE
-    rightMostLaneMarking: SOLID_WHITE
-    disabledGuidanceAlgorithms: ['PLATOONING']
-    requiredLaneIndex: 0
-
   - !gov.dot.fhwa.saxton.carma.route.RouteWaypoint
     location: !gov.dot.fhwa.saxton.carma.geometry.geodesic.Location
       latitude: 39.4660327

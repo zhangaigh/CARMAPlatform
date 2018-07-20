@@ -8,15 +8,15 @@ platooning_min_maneuver_length: 15.0
 
 # Double: The proportional term in the platoon speed PID controller
 # Units: 1
-platooning_Kp: 0.05
+platooning_Kp: -0.05
 
 # Double: The integral term in the platoon speed PID controller
 # Units: 1
-platooning_Ki: 0.0
+platooning_Ki: -0.0
 
 # Double: The derivative term in the platoon speed PID controller
 # Units: 1
-platooning_Kd: 0.08
+platooning_Kd: -0.08
 
 # Double: The integrator max cap before it is multiplied by Ki
 # Units: 1
@@ -40,12 +40,12 @@ platooning_max_size: 10
 # When algorithm_type == 2, it means PF algorithm
 # When algorithm_type == 3, it means PF* algorithm (not implemented)
 # When algorithm_typr == 4, it means LPF algorithm (this is only for truck platooning)
-platooning_algorithm_type: 1
+platooning_algorithm_type: 4
 
 # Double: The desired time headway to the front vehicle within the platoon
 # This parameter will be omitted if the platooning algorithm type is LPF
 # Units: s
-platooning_desired_time_headway: 0.84
+platooning_desired_time_headway: 1.64
 
 # Double: The minimum space between two consecutive vehicles from the center of one bounding box to the center of another bounding box
 # Units: m
@@ -78,8 +78,8 @@ platooning_cmd_max_adjustment: 10.0
 # Double: These variables are the the time or distance boundaries at which switching in leadership must occur in the APF algorithm
 # The first two parameters are also used by LPF truck platooning algorithm to determine whether the host vehicle should change the current leader
 # Units: s
-platooning_lower_boundary: 0.4
-platooning_upper_boundary: 0.7
+platooning_lower_boundary: 1.1
+platooning_upper_boundary: 1.5
 platooning_max_spacing: 4.0
 platooning_min_spacing: 3.0
 # Units: m
@@ -106,7 +106,7 @@ platooning_info_time_interval: 200
 # Double: The desired time gap to the front vehicle
 # This parameter will be omitted if the platooning algorithm type is not LPF
 # Units: s
-platooning_desired_time_gap: 1.0
+platooning_desired_time_gap: 1.5
 
 # Double: The minimum space between two consecutive vehicles from bumper to bumper
 # Units: m

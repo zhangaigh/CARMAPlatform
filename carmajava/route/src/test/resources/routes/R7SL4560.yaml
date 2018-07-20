@@ -11,7 +11,7 @@ waypoints:
     minCrossTrack: -25.0
     maxCrossTrack: 25.0
     lowerSpeedLimit: 0
-    upperSpeedLimit: 35
+    upperSpeedLimit: 45
     laneCount: 2
     interiorLaneMarkings: BROKEN_YELLOW
     leftMostLaneMarking: SOLID_WHITE
