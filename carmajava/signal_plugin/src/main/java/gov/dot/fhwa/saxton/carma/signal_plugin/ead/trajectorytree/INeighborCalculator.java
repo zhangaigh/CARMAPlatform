@@ -1,6 +1,7 @@
 package gov.dot.fhwa.saxton.carma.signal_plugin.ead.trajectorytree;
 
 import gov.dot.fhwa.saxton.carma.signal_plugin.asd.IntersectionData;
+import gov.dot.fhwa.saxton.carma.signal_plugin.ead.INodeCollisionChecker;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public interface INeighborCalculator {
    * @param speedIncrement - increment between adjacent speed points in the grid, m/s
    */
   void initialize(List<IntersectionData> intersections, int numIntersections, double timeIncrement,
-                  double speedIncrement);
+                  double speedIncrement, INodeCollisionChecker collisionChecker);
 
   /**
    * Gets a list of neighbors to the provided node
@@ -25,4 +26,11 @@ public interface INeighborCalculator {
    * @return List of node's neighbors
    */
   List<Node> neighbors(Node node);
+
+
+  /**
+   * Stores the vehicle's desired speed if traffic signals posed no constraint
+   * @param os - operating speed, m/s
+   */
+  void setOperatingSpeed(double os);
 }

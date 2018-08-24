@@ -860,22 +860,32 @@ public class Trajectory implements ITrajectory {
 					spatsReceivedOnNewIntersection_ = 0;
 					spatReliableOnNearest_ = false;
 					intersectionsChanged_ = true;
-					log_.debug("TRAJ", "Approach lane ID changed from " + prevApproachLaneId_ + " to " + approachLaneId_);
+					log_.debug("TRAJ", "updateSpateData: approach lane ID changed from " + prevApproachLaneId_ + " to " + approachLaneId_);
 				}else if (approachLaneId_ >= 0){
 					++timeStepsNewIntersection_;
 				}
 
 				//get its spat info
-				//log_.debug("TRAJ", "updateSpatData getting spat for approach lane " + laneId);
+				log_.debug("TRAJ", "updateSpatData getting spat for approach lane " + laneId + ". intersections_ size = " + intersections_.size());
 				ISpatMessage sm = intersections_.get(0).spat;
 				spat = null;
 				if (sm != null) {
 					spat = sm.getSpatForLane(approachLaneId_);
-					phase_ = ((PhaseDataElement) spat.get(DataElementKey.SIGNAL_PHASE)).value();
-					timeRemaining_ = ((DoubleDataElement) spat.get(DataElementKey.SIGNAL_TIME_TO_NEXT_PHASE)).value();
+					log_.debug("TRAJ", "updateSpatData: spat = " + (spat == null ? "null" : "not null"));
+					log_.debug("TRAJ", " spat = " + spat.toString());
+					PhaseDataElement pde = ((PhaseDataElement) spat.get(DataElementKey.SIGNAL_PHASE));
+					if (pde != null) {
+						phase_ = pde.value();
+					}
+					DoubleDataElement dde = ((DoubleDataElement) spat.get(DataElementKey.SIGNAL_TIME_TO_NEXT_PHASE));
+					if (dde != null) {
+						timeRemaining_ = dde.value();
+					}
 					spatErrorCounter_ = 0;
 					++spatsReceivedOnNewIntersection_;
 				}
+				log_.debug("TRAJ", "updateSpatData: spat defined, spatsReceivedOnNewIntersection = " +
+							spatsReceivedOnNewIntersection_);
 
 				//determine if the spat signal on this intersection is reliable (if the intersection is just
 				// now coming into view the messages may be spotty, so we don't want to deal with them yet)
@@ -931,6 +941,7 @@ public class Trajectory implements ITrajectory {
 				}
 			} //endif intersection but no spat message
 		} //endif have intersection geometry
+		log_.debug("TRAJ", "updateSpatData: end of geometry block.");
 
 		//populate the simpler elements of the intersection data
 		if (intersections_ != null  &&  intersections_.size() > 0) {
