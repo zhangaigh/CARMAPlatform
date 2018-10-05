@@ -232,7 +232,7 @@ max_points_per_mobility_path: 60
 
 # Double: The minimum timegap to accept for resolution of spatial and temporal conflicts in plans
 # Units: seconds
-min_conflict_avoidance_timegap: 6.0
+min_conflict_avoidance_timegap: 4.0
 
 # Double: The percentage of the vehicle's maximum acceleration capability to allow the yield plugin to use
 # for conflict avoidance
