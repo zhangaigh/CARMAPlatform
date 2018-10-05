@@ -25,6 +25,15 @@ export ROS_HOME=/opt/carma/.ros
 # Remove bad launch.pid file if it exists
 rm /opt/carma/launch.pid
 
+# Pull down latest parameter and route files
+# Uses special limited access temporary key for Kyle's github account
+pushd /opt/carma/params
+git pull master 
+
+cd /opt/carma/routes
+git pull master 
+popd
+
 # Launch platform
 rosBagRecord=$1
 roslaunch --pid=/opt/carma/launch.pid carma saxton_cav.launch use_rosbag:=$rosBagRecord

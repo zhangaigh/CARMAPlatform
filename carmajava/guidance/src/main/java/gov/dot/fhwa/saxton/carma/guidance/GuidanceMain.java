@@ -49,6 +49,12 @@ import org.ros.node.parameter.ParameterTree;
 import org.ros.node.service.ServiceResponseBuilder;
 import org.ros.node.service.ServiceServer;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -263,8 +269,44 @@ public class GuidanceMain extends SaxtonBaseNode {
           @Override
           public void build(GetSystemVersionRequest request, GetSystemVersionResponse response)
               throws ServiceException {
+              
+            ProcessBuilder proc1 = new ProcessBuilder();
+            proc1.command("git", "rev-parse", "HEAD");
+            proc1.directory(new File("/opt/carma/params"));
+
+            ProcessBuilder proc2 = new ProcessBuilder();
+            proc2.command("git", "rev-parse", "HEAD");
+            proc2.directory(new File("/opt/carma/routes"));
+
+            String paramsHash = "VERSION_ERROR";
+            String routesHash = "VERSION_ERROR";
+
+            try {
+              Process paramsProc = proc1.start();
+              Process routesProc = proc2.start();
+
+              BufferedReader paramsVerStream = new BufferedReader(new InputStreamReader(paramsProc.getInputStream()));
+              BufferedReader routesVerStream = new BufferedReader(new InputStreamReader(routesProc.getInputStream()));
+
+              int exit1 = paramsProc.waitFor();
+              int exit2 = routesProc.waitFor();
+
+              Optional<String> paramData = paramsVerStream.lines().findFirst();
+              if (paramData.isPresent()) {
+                paramsHash = paramData.get();
+              }
+
+              Optional<String> routeData = paramsVerStream.lines().findFirst();
+              if (routeData.isPresent()) {
+                routesHash = routeData.get();
+              }
+
+            } catch (Exception e) {
+              log.warn("Error reading routes and params version information!", e);
+            }
+
             response.setSystemName(version.componentName());
-            response.setRevision(version.revisionString());
+            response.setRevision(version.revisionString() + "PARAMS: " + paramsHash + " ROUTES: " + routesHash);
           }
         });
   }//onStart
