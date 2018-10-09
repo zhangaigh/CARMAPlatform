@@ -27,10 +27,10 @@ rm /opt/carma/launch.pid
 
 # Pull down latest parameter and route files
 pushd /opt/carma/params
-git pull master 
+git pull
 
 cd /opt/carma/routes
-git pull master 
+git pull
 popd
 
 # Launch platform
