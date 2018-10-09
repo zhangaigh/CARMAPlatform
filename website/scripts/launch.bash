@@ -26,7 +26,6 @@ export ROS_HOME=/opt/carma/.ros
 rm /opt/carma/launch.pid
 
 # Pull down latest parameter and route files
-# Uses special limited access temporary key for Kyle's github account
 pushd /opt/carma/params
 git pull master 
 
