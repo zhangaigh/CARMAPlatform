@@ -299,7 +299,7 @@ public class GuidanceMain extends SaxtonBaseNode {
                 }
               }
 
-              Optional<String> routeData = paramsVerStream.lines().findFirst();
+              Optional<String> routeData = routesVerStream.lines().findFirst();
               if (routeData.isPresent()) {
                 routesHash = routeData.get();
                 if (routesHash.length() > 6) {
@@ -312,7 +312,7 @@ public class GuidanceMain extends SaxtonBaseNode {
             }
 
             response.setSystemName(version.componentName());
-            response.setRevision(version.revisionString() + "PARAMS: " + paramsHash + " ROUTES: " + routesHash);
+            response.setRevision(version.revisionString() + "<br />PARAMS: " + paramsHash + " ROUTES: " + routesHash);
           }
         });
   }//onStart
