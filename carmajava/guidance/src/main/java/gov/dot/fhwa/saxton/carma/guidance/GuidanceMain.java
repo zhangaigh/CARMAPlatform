@@ -294,11 +294,17 @@ public class GuidanceMain extends SaxtonBaseNode {
               Optional<String> paramData = paramsVerStream.lines().findFirst();
               if (paramData.isPresent()) {
                 paramsHash = paramData.get();
+                if (paramsHash.length() > 6) {
+                  paramsHash = paramsHash.substring(0, 6);
+                }
               }
 
               Optional<String> routeData = paramsVerStream.lines().findFirst();
               if (routeData.isPresent()) {
                 routesHash = routeData.get();
+                if (routesHash.length() > 6) {
+                  routesHash = routesHash.substring(0, 6);
+                }
               }
 
             } catch (Exception e) {
