@@ -310,7 +310,7 @@ public class EadAStar implements IEad {
         //build a detailed plan to reach the near-term goal node downtrack of first intersection [planDetailedPath]
         try {
             //the result from planCoarsePath method should the length of goals list is 2 
-            currentPath_ = planDetailedPath(startNode, goals.get(1), goals.get(0));
+            currentPath_ = planDetailedPath(startNode, goals.get(0), goals.get(1));
         }catch (Exception e) {
             log_.warn("EAD", "plan trapped exception from planDetailedPath: ", e);
             throw e;

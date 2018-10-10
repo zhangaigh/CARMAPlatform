@@ -114,11 +114,11 @@ public class FinePathNeighbors extends NeighborBase {
     ////////////////////
 
     private boolean isInAllowableSpeedRegion(double speed, double dist) {
-        if(path_ == null || path_.size() == 0) {
+        if(path_ == null || path_.size() == 0 || dist < path_.get(0).getDistanceAsDouble()) {
             return true;
         }
         for(int i = 0; i < path_.size(); i++) {
-            if(dist < path_.get(i).getDistanceAsDouble()) {
+            if(dist > path_.get(i).getDistanceAsDouble()) {
                 if(i == path_.size() - 1) {
                     return true;
                 } else {
@@ -126,7 +126,7 @@ public class FinePathNeighbors extends NeighborBase {
                 }
             } else {
                 if(i == 0) {
-                    return true;
+                    return Math.abs(path_.get(i).getSpeedAsDouble() - speed) <= allowableSpeedRegion_;
                 } else {
                     Node previousNode = path_.get(i - 1), nextNode = path_.get(i);
                     double deltaD = nextNode.getDistanceAsDouble() - previousNode.getDistanceAsDouble();
@@ -136,6 +136,8 @@ public class FinePathNeighbors extends NeighborBase {
                 }
             }
         }
+        //SHOULD NEVER REACH HERE
+        log_.error("EAD", "Found an error in isInAllowableSpeedRegion");
         return false;
     }
     

@@ -49,6 +49,7 @@ public class EADAStarPlanTest {
         when(mockConfig.getDoubleDefaultValue("ead.fine_time_inc", 2.0)).thenReturn(3.0);
         when(mockConfig.getDoubleDefaultValue("ead.fine_speed_inc", 1.0)).thenReturn(3.0);
         when(mockConfig.getDoubleDefaultValue("ead.acceptableStopDistance", 6.0)).thenReturn(6.0);
+        when(mockConfig.getDoubleDefaultValue("ead.allowableSpeedRegion", 5.0)).thenReturn(5.0);
         long startTime = System.currentTimeMillis();
         EadAStar ead = new EadAStar();
         ead.initialize(100, new AStarSolver());
@@ -56,8 +57,8 @@ public class EADAStarPlanTest {
         intersection1.map = mock(MapMessage.class);
         intersection1.roughDist = 7586;
         intersection1.dtsb = 75.86;
-        intersection1.currentPhase = SignalPhase.GREEN;
-        intersection1.timeToNextPhase = 5.0;
+        intersection1.currentPhase = SignalPhase.RED;
+        intersection1.timeToNextPhase = 27.0;
         IntersectionData intersection2 = new IntersectionData();
         intersection2.map = mock(MapMessage.class);
         intersection2.roughDist = 29298;
