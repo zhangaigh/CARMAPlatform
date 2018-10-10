@@ -24,6 +24,9 @@ import gov.dot.fhwa.saxton.carma.signal_plugin.logger.ILogger;
 import gov.dot.fhwa.saxton.carma.signal_plugin.logger.LoggerManager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import static gov.dot.fhwa.saxton.carma.signal_plugin.appcommon.Constants.MPS_TO_MPH;
@@ -36,6 +39,8 @@ public class FinePathNeighbors extends NeighborBase {
     protected double                        acceptableStopDist_; //max dist before bar it's acceptable to stop, m
     protected double                        debugThreshold_;//node distance beyond which we will turn on debug logging
     protected double                        responseLag_; //vehicle dynamic response lag, sec
+    protected double                        allowableSpeedRegion_;
+    protected List<Node>                    path_;
     protected static ILogger                log_ = LoggerManager.getLogger(FinePathNeighbors.class);
     protected static double                 FLOATING_POINT_EPSILON = 0.1;
 
@@ -52,6 +57,7 @@ public class FinePathNeighbors extends NeighborBase {
         timeBuffer_ = config.getDoubleDefaultValue("ead.timebuffer", 4.0);
         debugThreshold_ = config.getDoubleDefaultValue("ead.debugThreshold", -1.0);
         responseLag_ = config.getDoubleDefaultValue("ead.response.lag", 1.9);
+        allowableSpeedRegion_ = config.getDoubleDefaultValue("ead.allowableSpeedRegion", 5.0);
     }
 
 
@@ -91,7 +97,7 @@ public class FinePathNeighbors extends NeighborBase {
         for(double v : speeds) {
             double deltaD = variableTimeInc * (curSpeed + v) * 0.5;
             double newDist = curDist + deltaD;
-            if(!signalViolation(curDist, newDist, curTime, newTime)) {
+            if(!signalViolation(curDist, newDist, curTime, newTime) && isInAllowableSpeedRegion(v, newDist)) {
                 neighbors.add(new Node(newDist, newTime, v));
             } else {
                 log_.debug("PLAN", "Remove candidate speed due to signal violation: " + v);
@@ -101,8 +107,38 @@ public class FinePathNeighbors extends NeighborBase {
         return neighbors;
     }
     
+    public void setCoarsePlan(List<Node> path) {
+        path_ = path;
+    }
+
     ////////////////////
 
+    private boolean isInAllowableSpeedRegion(double speed, double dist) {
+        if(path_ == null || path_.size() == 0) {
+            return true;
+        }
+        for(int i = 0; i < path_.size(); i++) {
+            if(dist < path_.get(i).getDistanceAsDouble()) {
+                if(i == path_.size() - 1) {
+                    return true;
+                } else {
+                    continue;
+                }
+            } else {
+                if(i == 0) {
+                    return true;
+                } else {
+                    Node previousNode = path_.get(i - 1), nextNode = path_.get(i);
+                    double deltaD = nextNode.getDistanceAsDouble() - previousNode.getDistanceAsDouble();
+                    double deltaV = nextNode.getSpeedAsDouble() - previousNode.getSpeedAsDouble();
+                    double coarsePlanSpeed = (((dist - previousNode.getDistanceAsDouble()) / deltaD) * deltaV) + previousNode.getSpeedAsDouble();
+                    return Math.abs(coarsePlanSpeed - speed) <= allowableSpeedRegion_;
+                }
+            }
+        }
+        return false;
+    }
+    
     private List<Double> getViableSpeeds(Node node, double variableTimeInc) {
         double curTime = node.getTimeAsDouble();
         double curDist = node.getDistanceAsDouble();

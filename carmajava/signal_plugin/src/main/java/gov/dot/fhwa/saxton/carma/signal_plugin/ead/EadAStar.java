@@ -24,6 +24,7 @@ import gov.dot.fhwa.saxton.carma.signal_plugin.ead.trajectorytree.*;
 import gov.dot.fhwa.saxton.carma.signal_plugin.logger.ILogger;
 import gov.dot.fhwa.saxton.carma.signal_plugin.logger.LoggerManager;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -111,7 +112,7 @@ public class EadAStar implements IEad {
      * This method only accounts for travel time, trying to minimize it without violating signal laws.
      * @return a node representing the best goal we can hope to reach after the first intersection
      */
-    protected Node planCoarsePath(double operSpeed, Node start) throws Exception {
+    protected List<Node> planCoarsePath(double operSpeed, Node start) throws Exception {
 
         //we may be receiving spat signals from a farther intersection but haven't yet seen a MAP message from it,
         // so its rough distance is going to be a bogus, very large value; therefore, only look ahead for as many
@@ -186,13 +187,10 @@ public class EadAStar implements IEad {
         log_.debug("EAD", "planCoarsePath found a solution after " + iter + " iterations.");
         //System.out.println("planCoarsePath found a solution after " + iter + " iterations.");
 
-        //we always use the node after current intersection as the goal node
-        Node fineGoal = path.get(2);
-
         //summarize the chosen path
-        summarizeCoarsePath(path, coarseGoal, fineGoal);
+        summarizeCoarsePath(path, coarseGoal, path.get(2));
         
-        return fineGoal;
+        return path.subList(1, 3);
     }
 
 
@@ -204,11 +202,12 @@ public class EadAStar implements IEad {
      * @apiNote neighbor nodes are located according to the increments in each dimension specified by the
      * config file parameters fineTimeInc, fineDistInc and fineSpeedInc.
      */
-    protected List<Node> planDetailedPath(Node start, Node goal) throws Exception {
+    protected List<Node> planDetailedPath(Node start, Node intermediateGoal, Node goal) throws Exception {
         log_.debug("EAD", "Entering planDetailedPath with start = " + start.toString() + ", goal = " + goal.toString());
         
         //create a neighbor calculator for this tree using a detailed grid
         fineNeighborCalc_.initialize(intList_, 1, fineTimeInc_, fineSpeedInc_);
+        ((FinePathNeighbors) fineNeighborCalc_).setCoarsePlan(Arrays.asList(start, intermediateGoal, goal));
 
         //find the best path through this tree [use AStarSolver]
         fuelCostModel_.setGoal(goal);
@@ -297,7 +296,7 @@ public class EadAStar implements IEad {
 
         ////////// BUILD & SOLVE THE DIJKSTRA TREE TO DEFINE THE BEST PATH
 
-        Node goal;
+        List<Node> goals;
 
         //define starting node and reset DDT since we are beginning execution of a new path
         speedCmd_ = speed; // The starting speed command is the current speed
@@ -306,11 +305,12 @@ public class EadAStar implements IEad {
         currentPath_ = null;
 
         //perform coarse planning to determine the goal node downtrack of the first intersection [planCoarsePath]
-        goal = planCoarsePath(operSpeed, startNode);
+        goals = planCoarsePath(operSpeed, startNode);
 
         //build a detailed plan to reach the near-term goal node downtrack of first intersection [planDetailedPath]
         try {
-            currentPath_ = planDetailedPath(startNode, goal);
+            //the result from planCoarsePath method should the length of goals list is 2 
+            currentPath_ = planDetailedPath(startNode, goals.get(1), goals.get(0));
         }catch (Exception e) {
             log_.warn("EAD", "plan trapped exception from planDetailedPath: ", e);
             throw e;

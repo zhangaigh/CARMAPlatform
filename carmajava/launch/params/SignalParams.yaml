@@ -131,6 +131,9 @@ ead/coarse_speed_inc: 2.0
 ead/fine_time_inc: 2.0
 ead/fine_speed_inc: 1.0
 
+# the allowable deviation in detail plan from coarse plan
+ead/allowableSpeedRegion: 5.0
+
 # enables limiting of speed commands based on maximum acceleration capability
 ead/accelLimiter: false
 
