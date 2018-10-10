@@ -77,4 +77,34 @@ public class EADAStarPlanTest {
             assertTrue(false); // indicate the failure
         }
     }
+    
+    @Test
+    public void planOneIntersection() {
+        when(mockConfig.getDoubleDefaultValue("ead.coarse_time_inc", 5.0)).thenReturn(4.0);
+        when(mockConfig.getDoubleDefaultValue("ead.coarse_speed_inc", 3.0)).thenReturn(2.0);
+        when(mockConfig.getDoubleDefaultValue("ead.fine_time_inc", 2.0)).thenReturn(2.0);
+        when(mockConfig.getDoubleDefaultValue("ead.fine_speed_inc", 1.0)).thenReturn(2.0);
+        when(mockConfig.getDoubleDefaultValue("ead.acceptableStopDistance", 6.0)).thenReturn(6.0);
+        when(mockConfig.getDoubleDefaultValue("ead.allowableSpeedRegion", 5.0)).thenReturn(5.0);
+        long startTime = System.currentTimeMillis();
+        EadAStar ead = new EadAStar();
+        ead.initialize(100, new AStarSolver());
+        IntersectionData intersection = new IntersectionData();
+        intersection.map = mock(MapMessage.class);
+        intersection.roughDist = 9960;
+        intersection.dtsb = 99.6;
+        intersection.currentPhase = SignalPhase.GREEN;
+        intersection.timeToNextPhase = 23.79;
+        List<IntersectionData> intersections = Arrays.asList(intersection);
+        try {
+            List<Node> res = ead.plan(11, 11, intersections);
+            System.out.println("A* Planning for one intersections takes " + (System.currentTimeMillis() - startTime) + " ms to finish");
+            for(Node n : res) {
+                System.out.println(n.toString());
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+            assertTrue(false); // indicate the failure
+        }
+    }
 }

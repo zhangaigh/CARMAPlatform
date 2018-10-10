@@ -27,7 +27,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static gov.dot.fhwa.saxton.carma.signal_plugin.appcommon.Constants.MPS_TO_MPH;
 
@@ -41,6 +43,7 @@ public class FinePathNeighbors extends NeighborBase {
     protected double                        responseLag_; //vehicle dynamic response lag, sec
     protected double                        allowableSpeedRegion_;
     protected List<Node>                    path_;
+    protected Map<Integer, Integer>         coarsePlanSpeed_;
     protected static ILogger                log_ = LoggerManager.getLogger(FinePathNeighbors.class);
     protected static double                 FLOATING_POINT_EPSILON = 0.1;
 
@@ -74,6 +77,7 @@ public class FinePathNeighbors extends NeighborBase {
 
     @Override
     public List<Node> neighbors(Node node) {
+        System.out.println("Entering node: " + node);
         List<Node> neighbors = new ArrayList<>();
 
         double curTime = node.getTimeAsDouble();
@@ -97,7 +101,7 @@ public class FinePathNeighbors extends NeighborBase {
         for(double v : speeds) {
             double deltaD = variableTimeInc * (curSpeed + v) * 0.5;
             double newDist = curDist + deltaD;
-            if(!signalViolation(curDist, newDist, curTime, newTime) && isInAllowableSpeedRegion(v, newDist)) {
+            if(!signalViolation(curDist, newDist, curTime, newTime) && isInAllowableSpeedRegion(v, newTime)) {
                 neighbors.add(new Node(newDist, newTime, v));
             } else {
                 log_.debug("PLAN", "Remove candidate speed due to signal violation: " + v);
@@ -108,37 +112,42 @@ public class FinePathNeighbors extends NeighborBase {
     }
     
     public void setCoarsePlan(List<Node> path) {
+        if(path == null || path.size() != 3) {
+            return;
+        }
         path_ = path;
+        coarsePlanSpeed_ = new HashMap<>();
+        int timeStep = (int) (timeInc_ * 10);
+        int endTime = ((int) Math.floor(path.get(2).getTime() / (timeInc_ * 10))) * timeStep;
+        int intermediateTime = ((int) Math.floor(path.get(1).getTime() / (timeInc_ * 10))) * timeStep;
+        System.out.println(endTime);
+        System.out.println(intermediateTime);
+        for(int i = 0; i <= endTime; i += timeStep) {
+            int desiredSpeed = 0;
+            if(i == 0) {
+                desiredSpeed = (int) path.get(0).getSpeed();
+            } else if(i <= intermediateTime) {
+                double timePct = (i * 1.0) / path.get(1).getTime();
+                long speedDelta = path.get(1).getSpeed() - path.get(0).getSpeed();
+                desiredSpeed = (int) (path.get(0).getSpeed() + (int) (speedDelta * timePct));
+            } else {
+                double timePct = (i * 1.0 - path.get(1).getTime()) / (path.get(2).getTime() - path.get(1).getTime());
+                long speedDelta = path.get(2).getSpeed() - path.get(1).getSpeed();
+                desiredSpeed = (int) (path.get(1).getSpeed() + (int) (speedDelta * timePct));
+            }
+            coarsePlanSpeed_.put(i, desiredSpeed);
+            System.out.println(i + "   " + desiredSpeed);
+        }
     }
 
     ////////////////////
 
-    private boolean isInAllowableSpeedRegion(double speed, double dist) {
-        if(path_ == null || path_.size() == 0 || dist < path_.get(0).getDistanceAsDouble()) {
+    private boolean isInAllowableSpeedRegion(double speed, double time) {
+        if(coarsePlanSpeed_ == null || coarsePlanSpeed_.get((int) time * 10) == null) {
             return true;
         }
-        for(int i = 0; i < path_.size(); i++) {
-            if(dist > path_.get(i).getDistanceAsDouble()) {
-                if(i == path_.size() - 1) {
-                    return true;
-                } else {
-                    continue;
-                }
-            } else {
-                if(i == 0) {
-                    return Math.abs(path_.get(i).getSpeedAsDouble() - speed) <= allowableSpeedRegion_;
-                } else {
-                    Node previousNode = path_.get(i - 1), nextNode = path_.get(i);
-                    double deltaD = nextNode.getDistanceAsDouble() - previousNode.getDistanceAsDouble();
-                    double deltaV = nextNode.getSpeedAsDouble() - previousNode.getSpeedAsDouble();
-                    double coarsePlanSpeed = (((dist - previousNode.getDistanceAsDouble()) / deltaD) * deltaV) + previousNode.getSpeedAsDouble();
-                    return Math.abs(coarsePlanSpeed - speed) <= allowableSpeedRegion_;
-                }
-            }
-        }
-        //SHOULD NEVER REACH HERE
-        log_.error("EAD", "Found an error in isInAllowableSpeedRegion");
-        return false;
+        int coarseSpeed = coarsePlanSpeed_.get((int) time * 10).intValue();
+        return Math.abs(coarseSpeed - speed) <= allowableSpeedRegion_;
     }
     
     private List<Double> getViableSpeeds(Node node, double variableTimeInc) {

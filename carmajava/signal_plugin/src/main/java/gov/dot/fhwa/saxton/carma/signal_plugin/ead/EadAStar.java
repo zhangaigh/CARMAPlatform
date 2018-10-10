@@ -211,7 +211,7 @@ public class EadAStar implements IEad {
 
         //find the best path through this tree [use AStarSolver]
         fuelCostModel_.setGoal(goal);
-        fuelCostModel_.setTolerances(new Node(0.51*fineSpeedInc_*fineTimeInc_, 0.51*fineTimeInc_, 0.51*fineSpeedInc_));
+        fuelCostModel_.setTolerances(new Node(0.51*fineSpeedInc_*fineTimeInc_, fineTimeInc_, 0.51*fineSpeedInc_));
         List<Node> path = solver_.solve(start, fuelCostModel_, fineNeighborCalc_);
         if (path == null  ||  path.size() == 0) {
             String msg = "///// planDetailedPath solver was unable to define a path.";
@@ -237,10 +237,10 @@ public class EadAStar implements IEad {
             log_.debugf("EAD", "    %.0f m", intList_.get(i).bestDTSB());
         }
         log_.info("EAD", "Coarse path plan:");
-        //System.out.println("Coarse path plan:");
+        System.out.println("Coarse path plan:");
         for (Node n : path) {
             log_.info("EAD", "    " + n.toString());
-            //System.out.println(n);
+            System.out.println(n);
         }
         log_.debug("EAD", "Coarse path attempted to reach goal: " + coarseGoal.toString());
         //System.out.println("Coarse path attempted to reach goal: " + coarseGoal.toString());
