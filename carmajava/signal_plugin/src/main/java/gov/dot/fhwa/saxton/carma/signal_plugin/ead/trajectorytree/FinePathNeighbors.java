@@ -120,8 +120,6 @@ public class FinePathNeighbors extends NeighborBase {
         int timeStep = (int) (timeInc_ * 10);
         int endTime = ((int) Math.floor(path.get(2).getTime() / (timeInc_ * 10))) * timeStep;
         int intermediateTime = ((int) Math.floor(path.get(1).getTime() / (timeInc_ * 10))) * timeStep;
-        System.out.println(endTime);
-        System.out.println(intermediateTime);
         for(int i = 0; i <= endTime; i += timeStep) {
             int desiredSpeed = 0;
             if(i == 0) {
@@ -136,7 +134,6 @@ public class FinePathNeighbors extends NeighborBase {
                 desiredSpeed = (int) (path.get(1).getSpeed() + (int) (speedDelta * timePct));
             }
             coarsePlanSpeed_.put(i, desiredSpeed);
-            System.out.println(i + "   " + desiredSpeed);
         }
     }
 
