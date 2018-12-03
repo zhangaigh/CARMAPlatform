@@ -16,7 +16,7 @@
 
 set -e
 
-USERNAME=usdot-carma
+USERNAME=usdotfhwastol
 IMAGE=carma
 
 cd "$(dirname "$0")"
