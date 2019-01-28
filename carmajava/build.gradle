@@ -14,13 +14,13 @@
  * the License.
  */
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.14.1'
+buildscript {
+  // Default bootstrap file for rosjava came from here "https://github.com/rosjava/rosjava_bootstrap/raw/kinetic/buildscript.gradle"
+  apply from: "rosjava_bootstrap.gradle"
 }
 
-buildscript {
- // Default bootstrap file for rosjava came from here "https://github.com/rosjava/rosjava_bootstrap/raw/kinetic/buildscript.gradle"
- apply from: "rosjava_bootstrap.gradle"
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.14.1'
 }
 
 apply plugin: 'catkin'
@@ -61,6 +61,9 @@ subprojects {
      */
     apply plugin: "ros-java"
     apply plugin: 'checkstyle'
+    apply plugin: "jacoco"
+
+
 
     checkstyle {
         configFile = rootProject.file("config/checkstyle.xml")
@@ -79,7 +82,18 @@ subprojects {
         reports {
             junitXml.enabled = false
             html.enabled = true
-        }               
+        }           
+        jacoco {
+            append = false
+        }   
+    }
+
+    jacocoTestReport {
+        reports {
+            xml.enabled false
+            csv.enabled false
+            html.destination file("$buildDir/reports/jacoco")
+        }
     }
 
     /*
@@ -93,7 +107,7 @@ subprojects {
 task testReport(type: TestReport) {
     destinationDir = file("$buildDir/reports/allTests")
     // Include the results from the `test` task in all subprojects
-    reportOn subprojects*.test
+    reportOn subprojects*.test, subprojects*.jacocoTestReport
 }
 
 /*
