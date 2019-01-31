@@ -24,6 +24,7 @@ task wrapper(type: Wrapper) {
 }
 
 apply plugin: 'catkin'
+apply plugin: "jacoco"
 
 allprojects {
     /*
@@ -44,6 +45,8 @@ allprojects {
         maven {
             url uri("../../../../devel/share/maven")
         }
+
+        jcenter()
     }
 }
 
@@ -78,6 +81,8 @@ subprojects {
     targetCompatibility = 1.8
     sourceCompatibility = 1.8
 
+
+
     test {
         reports {
             junitXml.enabled = false
@@ -86,13 +91,25 @@ subprojects {
         jacoco {
             append = false
         }   
+
+        doLast {
+            logger.error('HELLO ----------------------------- \n\n')
+            logger.error(coverageDestinationFile.absolutePath)
+        }
     }
+
 
     jacocoTestReport {
         reports {
             xml.enabled false
             csv.enabled false
-            html.destination file("$buildDir/reports/jacoco")
+            html.destination = coverageDestinationFile
+        }
+    }
+
+    doLast {
+        ext {
+            testRan = file("$buildDir/reports/jacoco").exists()
         }
     }
 
@@ -104,10 +121,24 @@ subprojects {
     
 }
 
+task jacocoMerge(type: JacocoMerge) {
+   subprojects.each { subproject ->
+    logger.error(subproject.ext.coverageDestinationFile.absolutePath)
+    logger.error('WORD ----------------------------- \n\n')
+      executionData subproject.tasks.withType(Test) && file(subproject.ext.coverageDestinationFile.absolutePath).exists()
+   } 
+
+   destinationFile = file("$buildDir/reports/allTests/jacoco")
+}
+
 task testReport(type: TestReport) {
     destinationDir = file("$buildDir/reports/allTests")
     // Include the results from the `test` task in all subprojects
-    reportOn subprojects*.test, subprojects*.jacocoTestReport
+    reportOn subprojects*.test
+}
+
+task testCoverageReport() {
+
 }
 
 /*
