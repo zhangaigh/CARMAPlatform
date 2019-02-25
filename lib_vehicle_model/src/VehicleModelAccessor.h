@@ -16,6 +16,8 @@
  */
 
 #include <vector>
+#include <string>
+#include <ros/console.h> // Include rosconsole for logging
 #include <cav_msgs/VehicleState.h>
 #include <cav_msgs/VehicleControlInput.h>
 #include <cav_msgs/Maneuvers.h> // This may be provided as an actual class rather than ROS message
@@ -34,6 +36,37 @@ class VehicleModelAccessor: public VehicleMotionPredictor
 {
   private:
     ParameterServer param_server_;
+
+    // Parameters
+    std::string vehicle_model_lib_path_;
+    double max_forward_speed_;
+    double max_reverse_speed_;
+    double forward_acceleration_limit_;
+    double forward_deceleration_limit_;
+    double reverse_acceleration_limit_;
+    double reverse_deceleration_limit_;
+    double max_steering_angle_;
+    double min_steering_angle_;
+    double max_steering_angle_rate_;
+    double max_trailer_angle_;
+    double min_trailer_angle_;
+
+    // Vehicle Model
+    std::shared_ptr<VehicleMotionModel> vehicle_model_; // TODO this probably shouldn't be a shared pointer
+
+    typedef VehicleMotionModel* (*create_fnc_ptr)();
+    typedef void (*destroy_fnc_ptr)(VehicleMotionModel*);
+
+    create_fnc_ptr create_fnc_;
+    destroy_fnc_ptr destroy_fnc_;
+
+
+
+    /** TODO throw some exceptions
+     * @brief Helper function to load the host vehicle model
+     * 
+     */
+    loadModel();
 
   public:
 
