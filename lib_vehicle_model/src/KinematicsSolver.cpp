@@ -26,86 +26,95 @@ double KinematicsSolver::solve(KinematicsProperty output_prop, KinematicsPropert
   switch(output_prop) {
 
     case INITIAL_VELOCITY:
-      switch(output_prop) {
+      switch(unavailable_prop) {
         case FINAL_VELOCITY:
           //a,d,t
+          // v_i = (d/t) - (0.5*a*t)
+          return (prop2 / prop3) - (0.5 * prop1 * prop3);
           break;
         case ACCELERATION:
-        //v_f,d,t
+          //v_f,d,t
+          // v_i = (2*d/t) - v_f
+          return (2 * prop2 / prop3) - prop1;
           break;
         case DISTANCE:
-        //v_f,a,t
+          //v_f,a,t
+          // v_i = v_f - a * t
+          return prop1 - (prop2 * prop3);
           break;
         case TIME:
-        //v_f,a,d
+          //v_f,a,d
+          // v_i = sqrt(v_f^2 - 2*a*d)
+          return sqrt(prop1*prop1 - (2 * prop2 * prop3));
           break;
       }
       break;
 
     case FINAL_VELOCITY:
-      switch(output_prop) {
+      switch(unavailable_prop) {
         case INITIAL_VELOCITY:
-        //a,d,t
+          //a,d,t
+          
           break;
         case ACCELERATION:
-        //v_i,d,t
+          //v_i,d,t
           break;
         case DISTANCE:
-        //v_i,a,t
+          //v_i,a,t
           break;
         case TIME:
-        //v_i,a,d
+          //v_i,a,d
           break;
       }
       break;
 
     case ACCELERATION:
-      switch(output_prop) {
+      switch(unavailable_prop) {
         case INITIAL_VELOCITY:
-        //v_f,d,t
+          //v_f,d,t
           break;
         case FINAL_VELOCITY:
-        //v_i,d,t
+          //v_i,d,t
           break;
         case DISTANCE:
-        //v_i,v_f,t
+          //v_i,v_f,t
           break;
         case TIME:
-        //v_i,v_f,d
+          //v_i,v_f,d
           break;
       }
       break;
 
     case DISTANCE:
-      switch(output_prop) {
+      switch(unavailable_prop) {
         case INITIAL_VELOCITY:
-        //v_f,a,t
+          //v_f,a,t
           break;
         case FINAL_VELOCITY:
-        //v_i,a,t
+          //v_i,a,t
           break;
         case ACCELERATION:
-        //v_i,v_f,t
+          //v_i,v_f,t
           break;
         case TIME:
-        //v_i,v_f,a
+          //v_i,v_f,a
           break;
       }
       break;
       
     case TIME:
-      switch(output_prop) {
+      switch(unavailable_prop) {
         case INITIAL_VELOCITY:
-        //v_f,a,d
+          //v_f,a,d
           break;
         case FINAL_VELOCITY:
-        //v_i,a,d
+          //v_i,a,d
           break;
         case ACCELERATION:
-        //v_i,v_f,d
+          //v_i,v_f,d
           break;
         case DISTANCE:
-        //v_i,v_f,a
+          //v_i,v_f,a
           break;
       }
       break;
