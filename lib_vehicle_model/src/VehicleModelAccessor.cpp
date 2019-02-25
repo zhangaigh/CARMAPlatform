@@ -68,20 +68,19 @@ VehicleModelAccessor::loadModel() {
     {
       ROS_FATAL_STREAM("Failed to find pointer to vehicle model shared library create function " << " Reported Error: " << dlerror());
     }
-    
+
     if (!destroy_fnc_)
     {
       ROS_FATAL_STREAM("Failed to find pointer to vehicle model shared library destroy function " << " Reported Error: " << dlerror());
     }
 
-    vehicle_model_.reset(create_fnc_());
+    // Set the vehicle model to the object returned by create_fnc
+    // Pass in the destroy_fnc as the deletor. 
+    vehicle_model_.reset(create_fnc_(), destroy_fnc_);
 }
 
 VehicleModelAccessor::~VehicleModelAccessor() {
-  if (destroy_fnc_) {
-    destroy_fnc_();
-  }
-  // TODO what do I need to do with vehicle_model_ pointer?
+  // No need to do anything. When the smart pointer goes out of scope the destroy_fnc will be called for the library
 }
 
 std::vector<cav_msgs::VehicleState> VehicleModelAccessor::predict(cav_msgs::VehicleState initial_state,
