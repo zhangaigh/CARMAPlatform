@@ -15,11 +15,11 @@
  * the License.
  */
 
+#include <stdexcept>
 #include <vector>
 #include <string>
-#include <ros/console.h> // Include rosconsole for logging
 #include <cav_msgs/VehicleState.h>
-#include <cav_msgs/VehicleControlInput.h>
+#include <VehicleControlInput.h>
 #include <cav_msgs/Maneuvers.h> // This may be provided as an actual class rather than ROS message
 #include "VehicleMotionPredictor.h"
 
@@ -52,19 +52,22 @@ class VehicleModelAccessor: public VehicleMotionPredictor
     double min_trailer_angle_;
 
     // Vehicle Model
-    std::shared_ptr<VehicleMotionModel> vehicle_model_; // TODO this probably shouldn't be a shared pointer
+    std::shared_ptr<VehicleMotionModel> vehicle_model_;
 
+    // Typedef for function pointers to use with loaded libraries create and destroy functions
     typedef VehicleMotionModel* (*create_fnc_ptr)();
     typedef void (*destroy_fnc_ptr)(VehicleMotionModel*);
 
+    // The pointers to the loaded libraries create and destroy functions
     create_fnc_ptr create_fnc_;
     destroy_fnc_ptr destroy_fnc_;
 
 
 
-    /** TODO throw some exceptions
-     * @brief Helper function to load the host vehicle model
+    /** 
+     * @brief Helper function to load the host vehicle model. Must be called only in constructor
      * 
+     * @throws std::invalid_argument If the model could not be loaded 
      */
     loadModel();
 
@@ -75,20 +78,31 @@ class VehicleModelAccessor: public VehicleMotionPredictor
      * 
      * @param parameter_server A reference to the parameter server which vehicle models will use to load parameters
      * 
+     * @throws std::invalid_argument If the model could not be loaded or parameters could not be read
+     * 
      */ 
     VehicleModelAccessor(ParameterServer& parameter_server);
 
     /**
-     * @brief Destructor ensures that any loaded vehicle model libraries are properly shutdown when this object is destroyed 
-     */ 
-    ~VehicleModelAccessor();
+     * @brief Predict vehicle motion given a starting state and list of control inputs
+     * 
+     * @param initial_state The starting state of the vehicle
+     * @param maneuvers A list of maneuvers which will be converted to control inputs seperated by the timestep
+     * @param timestep The time increment between returned traversed states and provided control inputs
+     * 
+     * @return A list of traversed states seperated by the timestep
+     * 
+     */
+    std::vector<cav_msgs::VehicleState> predict(cav_msgs::VehicleState initial_state,
+      std::vector<cav_msgs::Maneuvers> maneuvers, double timestep);
+
+    //
+    // Overriden interface functions
+    //
 
     std::vector<cav_msgs::VehicleState> predict(cav_msgs::VehicleState initial_state,
       double timestep, double delta_t) override; 
 
     std::vector<cav_msgs::VehicleState> predict(cav_msgs::VehicleState initial_state,
-      std::vector<cav_msgs::VehicleState> control_inputs, double timestep) override;
-
-    std::vector<cav_msgs::VehicleState> predict(cav_msgs::VehicleState initial_state,
-      std::vector<cav_msgs::Maneuvers> maneuvers, double timestep) override;
+      std::vector<VehicleModelControlInput> control_inputs, double timestep) override;
 };

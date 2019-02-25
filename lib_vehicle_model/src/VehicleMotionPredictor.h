@@ -55,18 +55,5 @@ class VehicleMotionPredictor
      * 
      */
     virtual std::vector<cav_msgs::VehicleState> predict(cav_msgs::VehicleState initial_state,
-      std::vector<cav_msgs::VehicleState> control_inputs, double timestep) = 0; // Defined as pure virtual function
-
-    /**
-     * @brief Predict vehicle motion given a starting state and list of control inputs
-     * 
-     * @param initial_state The starting state of the vehicle
-     * @param maneuvers A list of maneuvers which will be converted to control inputs seperated by the timestep
-     * @param timestep The time increment between returned traversed states and provided control inputs
-     * 
-     * @return A list of traversed states seperated by the timestep
-     * 
-     */
-    virtual std::vector<cav_msgs::VehicleState> predict(cav_msgs::VehicleState initial_state,
-      std::vector<cav_msgs::Maneuvers> maneuvers, double timestep) = 0; // Defined as pure virtual function
+      std::vector<VehicleModelControlInput> control_inputs, double timestep) = 0; // Defined as pure virtual function
 };

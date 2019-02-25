@@ -41,59 +41,61 @@ VehicleModelAccessor::VehicleModelAccessor(ParameterServer& parameter_server): p
 
   // Check if all the required parameters could be loaded
   if (!all_params) {
-    // TODO throw exception
+    throw std::invalid_argument("One of the required parameters could not be found or read");
   }
 
   // Load the vehicle model to be used
   loadModel();
   vehicle_model_->setParameterServer(param_server_);
-
-  // Then we need a create function with returns a pointer to our library object
-  // In our cpp file there should be a create and destroy function which is not in the class name space. This will return an instance of our model
 }
 
 VehicleModelAccessor::loadModel() {
-    void *lib_handle;
-    lib_handle = dlopen(vehicle_model_lib_path_, RTLD_NOW);
+  // Load library from path
+  void *lib_handle;
+  lib_handle = dlopen(vehicle_model_lib_path_, RTLD_NOW);
 
-    if (!lib_handle)
-    {
-      ROS_FATAL_STREAM("Failed to open vehicle model shared library at " << vehicle_model_lib_path_ << " Reported Error: " << dlerror());
-    }
- 
-    create_fnc_ = (create_fnc_ptr)dlsym(lib_handle,"create");
-    destroy_fnc_ = (destroy_fnc_ptr)dlsym(lib_handle,"destroy");
+  // Check if load successfull
+  if (!lib_handle)
+  {
+    throw std::invalid_argument("Failed to open vehicle model shared library at " << vehicle_model_lib_path_ << " Reported Error: " << dlerror());
+  }
 
-    if (!create_fnc_)
-    {
-      ROS_FATAL_STREAM("Failed to find pointer to vehicle model shared library create function " << " Reported Error: " << dlerror());
-    }
+  // Get pointers to the create and destroy functions
+  create_fnc_ = (create_fnc_ptr)dlsym(lib_handle,"create");
+  destroy_fnc_ = (destroy_fnc_ptr)dlsym(lib_handle,"destroy");
 
-    if (!destroy_fnc_)
-    {
-      ROS_FATAL_STREAM("Failed to find pointer to vehicle model shared library destroy function " << " Reported Error: " << dlerror());
-    }
+  // Check if create and destroy functions could be found
+  if (!create_fnc_)
+  {
+    throw std::invalid_argument("Failed to find pointer to vehicle model shared library create function " << " Reported Error: " << dlerror());
+  }
 
-    // Set the vehicle model to the object returned by create_fnc
-    // Pass in the destroy_fnc as the deletor. 
-    vehicle_model_.reset(create_fnc_(), destroy_fnc_);
-}
+  if (!destroy_fnc_)
+  {
+    throw std::invalid_argument("Failed to find pointer to vehicle model shared library destroy function " << " Reported Error: " << dlerror());
+  }
 
-VehicleModelAccessor::~VehicleModelAccessor() {
-  // No need to do anything. When the smart pointer goes out of scope the destroy_fnc will be called for the library
+  // Set the vehicle model to the object returned by create_fnc
+  // Pass in the destroy_fnc as the smart pointer deletor
+  vehicle_model_.reset(create_fnc_(), destroy_fnc_);
 }
 
 std::vector<cav_msgs::VehicleState> VehicleModelAccessor::predict(cav_msgs::VehicleState initial_state,
   double timestep, double delta_t) {
-    // TODO pass to loaded library here
+    // TODO add constraint checks
+    return vehicle_model_->predict(initial_state, timestep, delta_t);
   }
 
 std::vector<cav_msgs::VehicleState> VehicleModelAccessor::predict(cav_msgs::VehicleState initial_state,
   std::vector<cav_msgs::VehicleState> control_inputs, double timestep) {
-    // TODO pass to loaded library here
+    // TODO add constraint checks
+    return vehicle_model_->predict(initial_state, control_inputs, timestep);
   }
 
 std::vector<cav_msgs::VehicleState> VehicleModelAccessor::predict(cav_msgs::VehicleState initial_state,
   std::vector<cav_msgs::Maneuvers> maneuvers, double timestep) {
-    // TODO pass to loaded library here
+    // TODO add sanity checks
+    std::vector<VehicleModelControlInput> controlInputs;
+    // TODO convert the maneuvers to control inputs at this level before sending to library
+    return vehicle_model_->predict(initial_state, controlInputs, timestep);
   }
