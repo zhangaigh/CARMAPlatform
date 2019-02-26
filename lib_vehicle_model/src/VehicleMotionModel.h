@@ -15,11 +15,9 @@
  * the License.
  */
 
-#include <cav_msgs/VehicleState.h>
-#include <cav_msgs/Maneuver.h> // This may be provided as an actual class rather than ROS message
 #include "ParameterServer.h"
 #include "VehicleModelControlInput.h"
-
+#include "VehicleState.h"
 
 
 /**

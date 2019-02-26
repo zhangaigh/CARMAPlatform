@@ -19,8 +19,8 @@
 #include <vector>
 #include <string>
 #include <dlfcn.h>
-#include <cav_msgs/VehicleState.h>
-#include <cav_msgs/Maneuver.h> // This may be provided as an actual class rather than ROS message
+#include <memory>
+#include "VehicleState.h"
 #include "VehicleMotionPredictor.h"
 #include "VehicleMotionModel.h"
 #include "VehicleModelControlInput.h"
@@ -93,26 +93,13 @@ class VehicleModelAccessor: public VehicleMotionPredictor
      */ 
     ~VehicleModelAccessor();
 
-    /**
-     * @brief Predict vehicle motion given a starting state and list of control inputs
-     * 
-     * @param initial_state The starting state of the vehicle
-     * @param maneuvers A list of maneuvers which will be converted to control inputs seperated by the timestep
-     * @param timestep The time increment between returned traversed states and provided control inputs
-     * 
-     * @return A list of traversed states seperated by the timestep
-     * 
-     */
-    std::vector<cav_msgs::VehicleState> predict(cav_msgs::VehicleState initial_state,
-      std::vector<cav_msgs::Maneuver> maneuvers, double timestep);
-
     //
     // Overriden interface functions
     //
 
-    std::vector<cav_msgs::VehicleState> predict(cav_msgs::VehicleState initial_state,
+    std::vector<VehicleState> predict(VehicleState initial_state,
       double timestep, double delta_t) override; 
 
-    std::vector<cav_msgs::VehicleState> predict(cav_msgs::VehicleState initial_state,
+    std::vector<VehicleState> predict(VehicleState initial_state,
       std::vector<VehicleModelControlInput> control_inputs, double timestep) override;
 };

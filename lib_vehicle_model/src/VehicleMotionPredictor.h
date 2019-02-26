@@ -16,7 +16,7 @@
  */
 
 #include <vector>
-#include <cav_msgs/VehicleState.h>
+#include "VehicleState.h"
 #include "VehicleModelControlInput.h"
 
 
@@ -35,7 +35,7 @@ class VehicleMotionPredictor
      * 
      */
     virtual ~VehicleMotionPredictor() = 0;
-    
+
     /**
      * @brief Predict vehicle motion assuming no change in control input
      * 
@@ -46,7 +46,7 @@ class VehicleMotionPredictor
      * @return A list of traversed states seperated by the timestep
      * 
      */
-    virtual std::vector<cav_msgs::VehicleState> predict(cav_msgs::VehicleState initial_state,
+    virtual std::vector<VehicleState> predict(VehicleState initial_state,
       double timestep, double delta_t) = 0; // Defined as pure virtual function
 
     /**
@@ -59,6 +59,6 @@ class VehicleMotionPredictor
      * @return A list of traversed states seperated by the timestep
      * 
      */
-    virtual std::vector<cav_msgs::VehicleState> predict(cav_msgs::VehicleState initial_state,
+    virtual std::vector<VehicleState> predict(VehicleState initial_state,
       std::vector<VehicleModelControlInput> control_inputs, double timestep) = 0; // Defined as pure virtual function
 };

@@ -87,28 +87,18 @@ void VehicleModelAccessor::loadModel() {
   vehicle_model_.reset(create_fnc_(), destroy_fnc_);
 }
 
-std::vector<cav_msgs::VehicleState> VehicleModelAccessor::predict(cav_msgs::VehicleState initial_state,
+std::vector<VehicleState> VehicleModelAccessor::predict(VehicleState initial_state,
   double timestep, double delta_t) {
     // TODO add constraint checks
-    std::vector<cav_msgs::VehicleState> vec;
+    std::vector<VehicleState> vec;
     return vec;
     //return vehicle_model_->predict(initial_state, timestep, delta_t);
   }
 
-std::vector<cav_msgs::VehicleState> VehicleModelAccessor::predict(cav_msgs::VehicleState initial_state,
+std::vector<VehicleState> VehicleModelAccessor::predict(VehicleState initial_state,
   std::vector<VehicleModelControlInput> control_inputs, double timestep) {
     // TODO add constraint checks
-    std::vector<cav_msgs::VehicleState> vec;
+    std::vector<VehicleState> vec;
     return vec;
    // return vehicle_model_->predict(initial_state, control_inputs, timestep);
-  }
-
-std::vector<cav_msgs::VehicleState> VehicleModelAccessor::predict(cav_msgs::VehicleState initial_state,
-  std::vector<cav_msgs::Maneuver> maneuvers, double timestep) {
-    // TODO add sanity checks
-    std::vector<VehicleModelControlInput> controlInputs;
-    // TODO convert the maneuvers to control inputs at this level before sending to library
-    std::vector<cav_msgs::VehicleState> vec;
-    return vec;
-    //return vehicle_model_->predict(initial_state, controlInputs, timestep);
   }
