@@ -20,6 +20,8 @@
 #include <string>
 #include <dlfcn.h>
 #include <memory>
+#include <stdlib.h>
+#include <sstream>
 #include "VehicleState.h"
 #include "VehicleMotionPredictor.h"
 #include "VehicleMotionModel.h"
@@ -74,6 +76,26 @@ class VehicleModelAccessor: public VehicleMotionPredictor
      * @throws std::invalid_argument If the model could not be loaded 
      */
     void loadModel();
+
+    /**
+     * @brief Helper function to validate the initial vehicle state for a motion prediction
+     * 
+     * @param initial_state The starting state of the vehicle passed into the prediction function
+     * 
+     * @throws std::invalid_argument If the initial vehicle state is found to be invalid
+     */
+    void validateInitialState(const VehicleState& initial_state);  
+
+    /**
+     * @brief Helper function to validate the control inputs for a motion prediction
+     * 
+     * @param initial_state The starting state of the vehicle passed into the prediction function
+     * @param control_inputs The control inputs for the vehicle passed into the prediction function
+     * @param timestep The difference in time between successive control inputs in seconds
+     * 
+     * @throws std::invalid_argument If the initial control inputs are found to be invalid
+     */
+    void validateControlInputs(const VehicleState& initial_state, const std::vector<VehicleModelControlInput>& control_inputs, double timestep);  
 
   public:
 
