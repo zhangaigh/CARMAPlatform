@@ -15,6 +15,7 @@
  * the License.
  */
 
+#include <stdexcept>
 #include <math.h>
 #include "KinematicsProperty.h"
 

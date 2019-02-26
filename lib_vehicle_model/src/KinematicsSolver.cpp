@@ -28,24 +28,23 @@ double KinematicsSolver::solve(KinematicsProperty output_prop, KinematicsPropert
     case INITIAL_VELOCITY:
       switch(unavailable_prop) {
         case FINAL_VELOCITY:
-          //a,d,t
+          // Prop Order: a,d,t
           // v_i = (d/t) - (0.5*a*t)
           return (prop2 / prop3) - (0.5 * prop1 * prop3);
-          break;
         case ACCELERATION:
-          //v_f,d,t
+          // Prop Order: v_f,d,t
           // v_i = (2*d/t) - v_f
           return (2 * prop2 / prop3) - prop1;
-          break;
         case DISTANCE:
-          //v_f,a,t
+          // Prop Order: v_f,a,t
           // v_i = v_f - a * t
           return prop1 - (prop2 * prop3);
-          break;
         case TIME:
-          //v_f,a,d
+          // Prop Order: v_f,a,d
           // v_i = sqrt(v_f^2 - 2*a*d)
           return sqrt(prop1*prop1 - (2 * prop2 * prop3));
+        default:
+          throw std::invalid_argument("Unsupported KinematicProperty passed to solve function as missing type: " << unavailable_prop);
           break;
       }
       break;
@@ -53,17 +52,23 @@ double KinematicsSolver::solve(KinematicsProperty output_prop, KinematicsPropert
     case FINAL_VELOCITY:
       switch(unavailable_prop) {
         case INITIAL_VELOCITY:
-          //a,d,t
-          
-          break;
+          // Prop Order: a,d,t
+          // v_f = d/t + 0.5*a*t
+          return (prop2/prop3) + (0.5*prop1*prop3);
         case ACCELERATION:
-          //v_i,d,t
-          break;
+          // Prop Order: v_i,d,t
+          // v_f = 2*d/t - v_i
+          return (2*prop2/prop3) - prop1;
         case DISTANCE:
-          //v_i,a,t
-          break;
+          // Prop Order: v_i,a,t
+          // v_f = v_i + a*t
+          return prop1 + (prop2*prop3);
         case TIME:
-          //v_i,a,d
+          // Prop Order: v_i,a,d
+          // v_f = sqrt(v_i^2 + 2*a*d)
+          return sqrt(prop1*prop1 + 2*prop2*prop3);
+        default:
+          throw std::invalid_argument("Unsupported KinematicProperty passed to solve function as missing type: " << unavailable_prop);
           break;
       }
       break;
@@ -71,16 +76,23 @@ double KinematicsSolver::solve(KinematicsProperty output_prop, KinematicsPropert
     case ACCELERATION:
       switch(unavailable_prop) {
         case INITIAL_VELOCITY:
-          //v_f,d,t
-          break;
+          // Prop Order: v_f,d,t
+          // a = (2/t) * (v_f - (d/t))
+          return (2/prop3) * (prop1 - (prop2/prop3));
         case FINAL_VELOCITY:
-          //v_i,d,t
-          break;
+          // Prop Order: v_i,d,t
+          // a = (2/t) * (d/t - v_i)
+          return (2/prop3) * ((prop2/prop3) - prop1);
         case DISTANCE:
-          //v_i,v_f,t
-          break;
+          // Prop Order: v_i,v_f,t
+          // a = (v_f - v_i) / t
+          return (prop2 - prop1) / prop3;
         case TIME:
-          //v_i,v_f,d
+          // Prop Order: v_i,v_f,d
+          // a = (v_f^2 - v_i^2) / (2*d)
+          return (prop2*prop2 - prop1*prop1) / (2*prop3);
+        default:
+          throw std::invalid_argument("Unsupported KinematicProperty passed to solve function as missing type: " << unavailable_prop);
           break;
       }
       break;
@@ -88,16 +100,23 @@ double KinematicsSolver::solve(KinematicsProperty output_prop, KinematicsPropert
     case DISTANCE:
       switch(unavailable_prop) {
         case INITIAL_VELOCITY:
-          //v_f,a,t
-          break;
+          // Prop Order: v_f,a,t
+          // d = v_f*t - 0.5*a*t^2
+          return (prop1*prop3) - (0.5*prop2*prop3*prop3);
         case FINAL_VELOCITY:
-          //v_i,a,t
-          break;
+          // Prop Order: v_i,a,t
+          // d = v_i*t + 0.5*a*t^2
+          return (prop1*prop3) + (0.5*prop2*prop3*prop3);
         case ACCELERATION:
-          //v_i,v_f,t
-          break;
+          // Prop Order: v_i,v_f,t
+          // d = (v_i + v_f)*t / 2
+          return (prop1+prop2) * prop3 / 2;
         case TIME:
-          //v_i,v_f,a
+          // Prop Order: v_i,v_f,a
+          // d = (v_f^2 - v_i^2) / 2*a
+          return (prop2*prop2 - prop1*prop1) / (2*prop3);
+        default:
+          throw std::invalid_argument("Unsupported KinematicProperty passed to solve function as missing type: " << unavailable_prop);
           break;
       }
       break;
@@ -105,20 +124,30 @@ double KinematicsSolver::solve(KinematicsProperty output_prop, KinematicsPropert
     case TIME:
       switch(unavailable_prop) {
         case INITIAL_VELOCITY:
-          //v_f,a,d
-          break;
+          // Prop Order: v_f,a,d
+          // t = (v_f - sqrt(v_f^2 - 2*a*d)) / a
+          return (prop1 - sqrt(prop1*prop1 - 2*prop2*prop3)) / prop2;
         case FINAL_VELOCITY:
-          //v_i,a,d
-          break;
+          // Prop Order: v_i,a,d
+          // t = (sqrt(v_i^2 + 2*a*d) - v_i) / a
+          return (sqrt(prop1*prop1 + 2*prop2*prop3) - prop1) / prop2;
         case ACCELERATION:
-          //v_i,v_f,d
-          break;
+          // Prop Order: v_i,v_f,d
+          // t = (2*d) / (v_i+v_f)
+          return (2*prop3) / (prop1+prop2);
         case DISTANCE:
-          //v_i,v_f,a
+          // Prop Order: v_i,v_f,a
+          // t = (v_f - v_i) / a
+          return (prop2 - prop1) / prop3;
+        default:
+          throw std::invalid_argument("Unsupported KinematicProperty passed to solve function as missing type: " << unavailable_prop);
           break;
       }
       break;
-  }
 
-  return 0;// TODO remove or add defaults
+    // This should never be reached unless enum KinematicProperty enum is changed without updating this function
+    default:
+      throw std::invalid_argument("Unsupported KinematicProperty passed to solve function as output type: " << output_prop);
+      break;
+  }
 }

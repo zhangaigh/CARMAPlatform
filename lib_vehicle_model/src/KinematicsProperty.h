@@ -30,3 +30,20 @@ enum KinematicsProperty
   DISTANCE,
   TIME
 };
+
+/**
+ * Overload of << operation so enum objects will output as strings in print functions
+ * 
+ */ 
+std::ostream& operator<<( std::ostream& os, const KinematicsProperty& prop )
+{
+   switch( prop )
+   {
+      case INITIAL_VELOCITY: os << "INITIAL_VELOCITY"; break;
+      case FINAL_VELOCITY: os << "FINAL_VELOCITY"; break;
+      case ACCELERATION: os << "ACCELERATION"; break;
+      case DISTANCE: os << "DISTANCE"; break;
+      case TIME: os << "TIME"; break;
+      default: os << "ERROR: UNKNOWN TYPE"; break;
+   }
+}
