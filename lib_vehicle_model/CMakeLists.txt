@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(j2735_convertor)
+project(lib_vehicle_model)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 add_compile_options(-std=c++11)
@@ -9,9 +9,6 @@ add_compile_options(-std=c++11)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   cav_msgs
-  cav_srvs
-  j2735_msgs
-  bondcpp
   roscpp
 )
 
@@ -130,15 +127,10 @@ file(GLOB_RECURSE headers */*.hpp */*.h)
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(j2735_convertor_node
-        ${headers}
-         src/main.cpp
-         src/j2735_convertor.cpp
-         src/bsm_convertor.cpp
-         src/spat_convertor.cpp
-         src/map_convertor.cpp)
 
-target_link_libraries(j2735_convertor_node ${Boost_LIBRARIES} ${catkin_LIBRARIES})
+add_library(lib_vehicle_model src/KinematicsSolver.cpp src/ROSParameterServer.cpp src/VehicleModelAccessor.cpp)
+add_dependencies( lib_vehicle_model ${catkin_EXPORTED_TARGETS})
+target_link_libraries(lib_vehicle_model ${Boost_LIBRARIES} ${catkin_LIBRARIES})
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -170,18 +162,18 @@ add_dependencies(j2735_convertor_node ${PROJECT_NAME}_gencfg ${catkin_EXPORTED_T
 # )
 
 ## Mark executables and/or libraries for installation
-install(TARGETS j2735_convertor_node
-   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
+#install(TARGETS j2735_convertor_node
+#   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+#   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+#   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+#)
 
 ## Mark cpp header files for installation
- install(DIRECTORY include/${PROJECT_NAME}/
-   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-   FILES_MATCHING PATTERN "*.h"
-   PATTERN ".svn" EXCLUDE
- )
+# install(DIRECTORY include/${PROJECT_NAME}/
+#   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+#   FILES_MATCHING PATTERN "*.h"
+#   PATTERN ".svn" EXCLUDE
+# )
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
 # install(FILES

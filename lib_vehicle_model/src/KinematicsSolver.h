@@ -52,6 +52,17 @@ class KinematicsSolver
      * @param prop3 The third provided property
      * 
      * @return The value of the output_prop which was solved for
+     * // TODO think about if all these arguments should be references
      */ 
-    static double solve(KinematicsProperty output_prop, KinematicsProperty unavailable_prop, double prop1, double prop2, double prop3);
+    static double solve(const KinematicsProperty output_prop, const KinematicsProperty unavailable_prop, const double prop1, const double prop2, const double prop3);
+
+  private:
+
+    /**
+     * @brief Helper function to throw an exception with the provided message appended with the provided KinematicProperty field
+     * 
+     * @throws std::invalid_argument exception with the provided message and data
+     * 
+     */
+    static void throwTypeException(const std::string& message, const KinematicsProperty& propertyToNote);
 };

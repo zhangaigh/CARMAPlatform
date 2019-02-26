@@ -40,26 +40,33 @@ class ROSParameterServer: public ParameterServer
      */ 
     ROSParameterServer(ros::NodeHandle& nh);
 
+    /**
+     * @brief Destructor as required by interface
+     * 
+     */ 
+    ~ROSParameterServer();
+
     //
     // Overriden interface functions
     //
-    bool getParam(std::string& param_key, std::string& output) override;
 
-    bool getParam(std::string& param_key, double& output) override;
+    bool getParam(const std::string& param_key, std::string& output) override;
 
-    bool getParam(std::string& param_key, float& output) override;
+    bool getParam(const std::string& param_key, double& output) override;
 
-    bool getParam(std::string& param_key, int& output) override;
+    bool getParam(const std::string& param_key, float& output) override;
 
-    bool getParam(std::string& param_key, bool& output) override;
+    bool getParam(const std::string& param_key, int& output) override;
 
-    bool getParam(std::string& param_key, std::vector<std::string>& output) override;
+    bool getParam(const std::string& param_key, bool& output) override;
 
-    bool getParam(std::string& param_key, std::vector<double>& output) override;
+    bool getParam(const std::string& param_key, std::vector<std::string>& output) override;
 
-    bool getParam(std::string& param_key, std::vector<float>& output) override;
+    bool getParam(const std::string& param_key, std::vector<double>& output) override;
 
-    bool getParam(std::string& param_key, std::vector<int>& output) override;
+    bool getParam(const std::string& param_key, std::vector<float>& output) override;
 
-    bool getParam(std::string& param_key, std::vector<bool>& output) override;
+    bool getParam(const std::string& param_key, std::vector<int>& output) override;
+
+    bool getParam(const std::string& param_key, std::vector<bool>& output) override;
 };

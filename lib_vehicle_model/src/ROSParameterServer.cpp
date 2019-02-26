@@ -1,4 +1,3 @@
-#pragma once
 /*
  * Copyright (C) 2018-2019 LEIDOS.
  *
@@ -26,43 +25,45 @@
 // Constructor initializes NodeHandle
 ROSParameterServer::ROSParameterServer(ros::NodeHandle& nh):nh_(nh) {}
 
+ROSParameterServer::~ROSParameterServer() {};
+
 // Every getParam call delegates to the NodeHandle
-bool ROSParameterServer::getParam(std::string& param_key, std::string& output) {
+bool ROSParameterServer::getParam(const std::string& param_key, std::string& output) {
   return nh_.getParam(param_key, output);
 }
 
-bool ROSParameterServer::getParam(std::string& param_key, double& output) {
+bool ROSParameterServer::getParam(const std::string& param_key, double& output) {
   return nh_.getParam(param_key, output);
 }
 
-bool ROSParameterServer::getParam(std::string& param_key, float& output) {
+bool ROSParameterServer::getParam(const std::string& param_key, float& output) {
   return nh_.getParam(param_key, output);
 }
 
-bool ROSParameterServer::getParam(std::string& param_key, int& output) {
+bool ROSParameterServer::getParam(const std::string& param_key, int& output) {
   return nh_.getParam(param_key, output);
 }
 
-bool ROSParameterServer::getParam(std::string& param_key, bool& output) {
+bool ROSParameterServer::getParam(const std::string& param_key, bool& output) {
   return nh_.getParam(param_key, output);
 }
 
-bool ROSParameterServer::getParam(std::string& param_key, std::vector<std::string>& output) {
+bool ROSParameterServer::getParam(const std::string& param_key, std::vector<std::string>& output) {
   return nh_.getParam(param_key, output);
 }
 
-bool ROSParameterServer::getParam(std::string& param_key, std::vector<double>& output) {
+bool ROSParameterServer::getParam(const std::string& param_key, std::vector<double>& output) {
   return nh_.getParam(param_key, output);
 }
 
-bool ROSParameterServer::getParam(std::string& param_key, std::vector<float>& output) {
+bool ROSParameterServer::getParam(const std::string& param_key, std::vector<float>& output) {
   return nh_.getParam(param_key, output);
 }
 
-bool ROSParameterServer::getParam(std::string& param_key, std::vector<int>& output) {
+bool ROSParameterServer::getParam(const std::string& param_key, std::vector<int>& output) {
   return nh_.getParam(param_key, output);
 }
 
-bool ROSParameterServer::getParam(std::string& param_key, std::vector<bool>& output) {
+bool ROSParameterServer::getParam(const std::string& param_key, std::vector<bool>& output) {
   return nh_.getParam(param_key, output);
 }

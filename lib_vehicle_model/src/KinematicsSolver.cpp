@@ -1,4 +1,3 @@
-#pragma once
 /*
  * Copyright (C) 2018-2019 LEIDOS.
  *
@@ -21,8 +20,12 @@
  * Cpp containing the implementation of KinematicsSolver
  */
 
-double KinematicsSolver::solve(KinematicsProperty output_prop, KinematicsProperty unavailable_prop,
-   double prop1, double prop2, double prop3) {
+double KinematicsSolver::solve(const KinematicsProperty output_prop, const KinematicsProperty unavailable_prop,
+   const double prop1, const double prop2, const double prop3) {
+
+  const std::string bad_missing_prop_message("Unsupported KinematicProperty passed to solve function as missing type: ");
+  const std::string bad_output_prop_message("Unsupported KinematicProperty passed to solve function as output type: ");
+
   switch(output_prop) {
 
     case INITIAL_VELOCITY:
@@ -44,7 +47,7 @@ double KinematicsSolver::solve(KinematicsProperty output_prop, KinematicsPropert
           // v_i = sqrt(v_f^2 - 2*a*d)
           return sqrt(prop1*prop1 - (2 * prop2 * prop3));
         default:
-          throw std::invalid_argument("Unsupported KinematicProperty passed to solve function as missing type: " << unavailable_prop);
+          throwTypeException(bad_missing_prop_message, unavailable_prop);
           break;
       }
       break;
@@ -68,7 +71,7 @@ double KinematicsSolver::solve(KinematicsProperty output_prop, KinematicsPropert
           // v_f = sqrt(v_i^2 + 2*a*d)
           return sqrt(prop1*prop1 + 2*prop2*prop3);
         default:
-          throw std::invalid_argument("Unsupported KinematicProperty passed to solve function as missing type: " << unavailable_prop);
+          throwTypeException(bad_missing_prop_message, unavailable_prop);
           break;
       }
       break;
@@ -92,7 +95,7 @@ double KinematicsSolver::solve(KinematicsProperty output_prop, KinematicsPropert
           // a = (v_f^2 - v_i^2) / (2*d)
           return (prop2*prop2 - prop1*prop1) / (2*prop3);
         default:
-          throw std::invalid_argument("Unsupported KinematicProperty passed to solve function as missing type: " << unavailable_prop);
+          throwTypeException(bad_missing_prop_message, unavailable_prop);
           break;
       }
       break;
@@ -116,7 +119,7 @@ double KinematicsSolver::solve(KinematicsProperty output_prop, KinematicsPropert
           // d = (v_f^2 - v_i^2) / 2*a
           return (prop2*prop2 - prop1*prop1) / (2*prop3);
         default:
-          throw std::invalid_argument("Unsupported KinematicProperty passed to solve function as missing type: " << unavailable_prop);
+          throwTypeException(bad_missing_prop_message, unavailable_prop);
           break;
       }
       break;
@@ -140,14 +143,21 @@ double KinematicsSolver::solve(KinematicsProperty output_prop, KinematicsPropert
           // t = (v_f - v_i) / a
           return (prop2 - prop1) / prop3;
         default:
-          throw std::invalid_argument("Unsupported KinematicProperty passed to solve function as missing type: " << unavailable_prop);
+          throwTypeException(bad_missing_prop_message, unavailable_prop);
           break;
       }
       break;
 
     // This should never be reached unless enum KinematicProperty enum is changed without updating this function
     default:
-      throw std::invalid_argument("Unsupported KinematicProperty passed to solve function as output type: " << output_prop);
+      throwTypeException(bad_output_prop_message, output_prop);
       break;
   }
 }
+
+void KinematicsSolver::throwTypeException(const std::string& message, const KinematicsProperty& propertyToNote) {
+  std::ostringstream stream(message);
+  stream << propertyToNote;
+  throw std::invalid_argument(stream.str());
+}
+

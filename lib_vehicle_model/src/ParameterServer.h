@@ -27,6 +27,13 @@
 class ParameterServer 
 {
   public:
+
+    /**
+     * @brief Pure virtual destructor to ensure delete safety for pointers to implementing classes
+     * 
+     */
+    virtual ~ParameterServer() = 0;
+
     /**
      * @brief Get a string value from the parameter server
      * 
@@ -36,7 +43,7 @@ class ParameterServer
      * @return True if the parameter exists and was read. False otherwise
      * 
      */
-    virtual bool getParam(std::string& param_key, std::string& output) = 0; // Defined as pure virtual function
+    virtual bool getParam(const std::string& param_key, std::string& output) = 0; // Defined as pure virtual function
 
     /**
      * @brief Get a double value from the parameter server
@@ -47,7 +54,7 @@ class ParameterServer
      * @return True if the parameter exists and was read. False otherwise
      * 
      */
-    virtual bool getParam(std::string& param_key, double& output) = 0; // Defined as pure virtual function
+    virtual bool getParam(const std::string& param_key, double& output) = 0; // Defined as pure virtual function
 
     /**
      * @brief Get a float value from the parameter server
@@ -58,7 +65,7 @@ class ParameterServer
      * @return True if the parameter exists and was read. False otherwise
      * 
      */
-    virtual bool getParam(std::string& param_key, float& output) = 0; // Defined as pure virtual function
+    virtual bool getParam(const std::string& param_key, float& output) = 0; // Defined as pure virtual function
 
     /**
      * @brief Get a integer value from the parameter server
@@ -69,7 +76,7 @@ class ParameterServer
      * @return True if the parameter exists and was read. False otherwise
      * 
      */
-    virtual bool getParam(std::string& param_key, int& output) = 0; // Defined as pure virtual function
+    virtual bool getParam(const std::string& param_key, int& output) = 0; // Defined as pure virtual function
 
     /**
      * @brief Get a boolean value from the parameter server
@@ -80,7 +87,7 @@ class ParameterServer
      * @return True if the parameter exists and was read. False otherwise
      * 
      */
-    virtual bool getParam(std::string& param_key, bool& output) = 0; // Defined as pure virtual function
+    virtual bool getParam(const std::string& param_key, bool& output) = 0; // Defined as pure virtual function
 
     /**
      * @brief Get a list of string values from the parameter server
@@ -91,7 +98,7 @@ class ParameterServer
      * @return True if the parameter exists and was read. False otherwise
      * 
      */
-    virtual bool getParam(std::string& param_key, std::vector<std::string>& output) = 0; // Defined as pure virtual function
+    virtual bool getParam(const std::string& param_key, std::vector<std::string>& output) = 0; // Defined as pure virtual function
 
     /**
      * @brief Get a list of double values from the parameter server
@@ -102,7 +109,7 @@ class ParameterServer
      * @return True if the parameter exists and was read. False otherwise
      * 
      */
-    virtual bool getParam(std::string& param_key, std::vector<double>& output) = 0; // Defined as pure virtual function
+    virtual bool getParam(const std::string& param_key, std::vector<double>& output) = 0; // Defined as pure virtual function
 
     /**
      * @brief Get a list of float values from the parameter server
@@ -113,7 +120,7 @@ class ParameterServer
      * @return True if the parameter exists and was read. False otherwise
      * 
      */
-    virtual bool getParam(std::string& param_key, std::vector<float>& output) = 0; // Defined as pure virtual function
+    virtual bool getParam(const std::string& param_key, std::vector<float>& output) = 0; // Defined as pure virtual function
 
     /**
      * @brief Get a list of integer values from the parameter server
@@ -124,7 +131,7 @@ class ParameterServer
      * @return True if the parameter exists and was read. False otherwise
      * 
      */
-    virtual bool getParam(std::string& param_key, std::vector<int>& output) = 0; // Defined as pure virtual function
+    virtual bool getParam(const std::string& param_key, std::vector<int>& output) = 0; // Defined as pure virtual function
 
     /**
      * @brief Get a list of boolean values from the parameter server
@@ -135,5 +142,5 @@ class ParameterServer
      * @return True if the parameter exists and was read. False otherwise
      * 
      */
-    virtual bool getParam(std::string& param_key, std::vector<bool>& output) = 0; // Defined as pure virtual function
+    virtual bool getParam(const std::string& param_key, std::vector<bool>& output) = 0; // Defined as pure virtual function
 };

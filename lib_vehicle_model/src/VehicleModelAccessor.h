@@ -18,10 +18,14 @@
 #include <stdexcept>
 #include <vector>
 #include <string>
+#include <dlfcn.h>
 #include <cav_msgs/VehicleState.h>
-#include <VehicleControlInput.h>
-#include <cav_msgs/Maneuvers.h> // This may be provided as an actual class rather than ROS message
+#include <cav_msgs/Maneuver.h> // This may be provided as an actual class rather than ROS message
 #include "VehicleMotionPredictor.h"
+#include "VehicleMotionModel.h"
+#include "VehicleModelControlInput.h"
+#include "ParameterServer.h"
+
 
 
 
@@ -35,7 +39,7 @@
 class VehicleModelAccessor: public VehicleMotionPredictor
 {
   private:
-    ParameterServer param_server_;
+    std::shared_ptr<ParameterServer> param_server_;
 
     // Parameters
     std::string vehicle_model_lib_path_;
@@ -69,7 +73,7 @@ class VehicleModelAccessor: public VehicleMotionPredictor
      * 
      * @throws std::invalid_argument If the model could not be loaded 
      */
-    loadModel();
+    void loadModel();
 
   public:
 
@@ -81,7 +85,13 @@ class VehicleModelAccessor: public VehicleMotionPredictor
      * @throws std::invalid_argument If the model could not be loaded or parameters could not be read
      * 
      */ 
-    VehicleModelAccessor(ParameterServer& parameter_server);
+    VehicleModelAccessor(std::shared_ptr<ParameterServer> parameter_server);
+
+    /**
+     * @brief Destructor as required by interface
+     * 
+     */ 
+    ~VehicleModelAccessor();
 
     /**
      * @brief Predict vehicle motion given a starting state and list of control inputs
@@ -94,7 +104,7 @@ class VehicleModelAccessor: public VehicleMotionPredictor
      * 
      */
     std::vector<cav_msgs::VehicleState> predict(cav_msgs::VehicleState initial_state,
-      std::vector<cav_msgs::Maneuvers> maneuvers, double timestep);
+      std::vector<cav_msgs::Maneuver> maneuvers, double timestep);
 
     //
     // Overriden interface functions

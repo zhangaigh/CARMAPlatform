@@ -15,6 +15,9 @@
  * the License.
  */
 
+#include <iostream>
+#include <sstream>
+
 /**
  * @enum KinematicsProperty
  * @brief An enumeration which defines the possible properties in a basic kinematic equation using constant acceleration

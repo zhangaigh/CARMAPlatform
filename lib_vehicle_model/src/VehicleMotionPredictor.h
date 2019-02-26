@@ -17,9 +17,7 @@
 
 #include <vector>
 #include <cav_msgs/VehicleState.h>
-#include <cav_msgs/VehicleControlInput.h>
-#include <cav_msgs/Maneuvers.h> // This may be provided as an actual class rather than ROS message
-
+#include "VehicleModelControlInput.h"
 
 
 /**
@@ -31,6 +29,13 @@
 class VehicleMotionPredictor 
 {
   public:
+
+    /**
+     * @brief Pure virtual destructor to ensure delete safety for pointers to implementing classes
+     * 
+     */
+    virtual ~VehicleMotionPredictor() = 0;
+    
     /**
      * @brief Predict vehicle motion assuming no change in control input
      * 

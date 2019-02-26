@@ -1,4 +1,3 @@
-#pragma once
 /*
  * Copyright (C) 2018-2019 LEIDOS.
  *
@@ -23,21 +22,24 @@
  * Cpp containing the implementation of VehicleModelAccessor
  */
 
-VehicleModelAccessor::VehicleModelAccessor(ParameterServer& parameter_server): param_server_(parameter_server) {
+VehicleModelAccessor::VehicleModelAccessor(std::shared_ptr<ParameterServer> parameter_server) {
+
+  param_server_ = parameter_server;
+
   // Load Parameters
   bool all_params;
-  all_params = all_params && param_server_.getParam("vehicle_model_lib_path", vehicle_model_lib_path_);
-  all_params = all_params && param_server_.getParam("max_forward_speed", max_forward_speed_);
-  all_params = all_params && param_server_.getParam("max_reverse_speed", max_reverse_speed_);
-  all_params = all_params && param_server_.getParam("forward_acceleration_limit", forward_acceleration_limit_);
-  all_params = all_params && param_server_.getParam("forward_deceleration_limit", forward_deceleration_limit_);
-  all_params = all_params && param_server_.getParam("reverse_acceleration_limit", reverse_acceleration_limit_);
-  all_params = all_params && param_server_.getParam("reverse_deceleration_limit", reverse_deceleration_limit_);
-  all_params = all_params && param_server_.getParam("max_steering_angle", max_steering_angle_);
-  all_params = all_params && param_server_.getParam("min_steering_angle", min_steering_angle_);
-  all_params = all_params && param_server_.getParam("max_steering_angle_rate", max_steering_angle_rate_);
-  all_params = all_params && param_server_.getParam("max_trailer_angle", max_trailer_angle_);
-  all_params = all_params && param_server_.getParam("min_trailer_angle", min_trailer_angle_);
+  all_params = all_params && param_server_->getParam("vehicle_model_lib_path", vehicle_model_lib_path_);
+  all_params = all_params && param_server_->getParam("max_forward_speed", max_forward_speed_);
+  all_params = all_params && param_server_->getParam("max_reverse_speed", max_reverse_speed_);
+  all_params = all_params && param_server_->getParam("forward_acceleration_limit", forward_acceleration_limit_);
+  all_params = all_params && param_server_->getParam("forward_deceleration_limit", forward_deceleration_limit_);
+  all_params = all_params && param_server_->getParam("reverse_acceleration_limit", reverse_acceleration_limit_);
+  all_params = all_params && param_server_->getParam("reverse_deceleration_limit", reverse_deceleration_limit_);
+  all_params = all_params && param_server_->getParam("max_steering_angle", max_steering_angle_);
+  all_params = all_params && param_server_->getParam("min_steering_angle", min_steering_angle_);
+  all_params = all_params && param_server_->getParam("max_steering_angle_rate", max_steering_angle_rate_);
+  all_params = all_params && param_server_->getParam("max_trailer_angle", max_trailer_angle_);
+  all_params = all_params && param_server_->getParam("min_trailer_angle", min_trailer_angle_);
 
   // Check if all the required parameters could be loaded
   if (!all_params) {
@@ -49,15 +51,18 @@ VehicleModelAccessor::VehicleModelAccessor(ParameterServer& parameter_server): p
   vehicle_model_->setParameterServer(param_server_);
 }
 
-VehicleModelAccessor::loadModel() {
+VehicleModelAccessor::~VehicleModelAccessor() {};
+
+void VehicleModelAccessor::loadModel() {
   // Load library from path
   void *lib_handle;
-  lib_handle = dlopen(vehicle_model_lib_path_, RTLD_NOW);
+  lib_handle = dlopen(vehicle_model_lib_path_.c_str(), RTLD_NOW);
 
   // Check if load successfull
   if (!lib_handle)
   {
-    throw std::invalid_argument("Failed to open vehicle model shared library at " << vehicle_model_lib_path_ << " Reported Error: " << dlerror());
+    std::string errorLog(dlerror());
+    throw std::invalid_argument("Failed to open vehicle model shared library at " + vehicle_model_lib_path_ + " Reported Error: " + errorLog);
   }
 
   // Get pointers to the create and destroy functions
@@ -67,12 +72,14 @@ VehicleModelAccessor::loadModel() {
   // Check if create and destroy functions could be found
   if (!create_fnc_)
   {
-    throw std::invalid_argument("Failed to find pointer to vehicle model shared library create function " << " Reported Error: " << dlerror());
+    std::string errorLog(dlerror());
+    throw std::invalid_argument("Failed to find pointer to vehicle model shared library create function Reported Error: " + errorLog);
   }
 
   if (!destroy_fnc_)
   {
-    throw std::invalid_argument("Failed to find pointer to vehicle model shared library destroy function " << " Reported Error: " << dlerror());
+    std::string errorLog(dlerror());
+    throw std::invalid_argument("Failed to find pointer to vehicle model shared library destroy function Reported Error: " + errorLog);
   }
 
   // Set the vehicle model to the object returned by create_fnc
@@ -83,19 +90,25 @@ VehicleModelAccessor::loadModel() {
 std::vector<cav_msgs::VehicleState> VehicleModelAccessor::predict(cav_msgs::VehicleState initial_state,
   double timestep, double delta_t) {
     // TODO add constraint checks
-    return vehicle_model_->predict(initial_state, timestep, delta_t);
+    std::vector<cav_msgs::VehicleState> vec;
+    return vec;
+    //return vehicle_model_->predict(initial_state, timestep, delta_t);
   }
 
 std::vector<cav_msgs::VehicleState> VehicleModelAccessor::predict(cav_msgs::VehicleState initial_state,
-  std::vector<cav_msgs::VehicleState> control_inputs, double timestep) {
+  std::vector<VehicleModelControlInput> control_inputs, double timestep) {
     // TODO add constraint checks
-    return vehicle_model_->predict(initial_state, control_inputs, timestep);
+    std::vector<cav_msgs::VehicleState> vec;
+    return vec;
+   // return vehicle_model_->predict(initial_state, control_inputs, timestep);
   }
 
 std::vector<cav_msgs::VehicleState> VehicleModelAccessor::predict(cav_msgs::VehicleState initial_state,
-  std::vector<cav_msgs::Maneuvers> maneuvers, double timestep) {
+  std::vector<cav_msgs::Maneuver> maneuvers, double timestep) {
     // TODO add sanity checks
     std::vector<VehicleModelControlInput> controlInputs;
     // TODO convert the maneuvers to control inputs at this level before sending to library
-    return vehicle_model_->predict(initial_state, controlInputs, timestep);
+    std::vector<cav_msgs::VehicleState> vec;
+    return vec;
+    //return vehicle_model_->predict(initial_state, controlInputs, timestep);
   }

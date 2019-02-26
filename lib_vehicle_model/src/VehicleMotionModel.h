@@ -16,9 +16,9 @@
  */
 
 #include <cav_msgs/VehicleState.h>
-#include <cav_msgs/VehicleControlInput.h>
-#include <cav_msgs/Maneuvers.h> // This may be provided as an actual class rather than ROS message
+#include <cav_msgs/Maneuver.h> // This may be provided as an actual class rather than ROS message
 #include "ParameterServer.h"
+#include "VehicleModelControlInput.h"
 
 
 
@@ -37,5 +37,5 @@ class VehicleMotionModel: public virtual VehicleMotionPredictor
      * @param parameter_server The parameter server to use when a vehicle model is loading parameters
      * 
      */
-    virtual void setParameterServer(ParameterServer parameter_server) = 0; // Defined as pure virtual function
+    virtual void setParameterServer(std::shared_ptr<ParameterServer> parameter_server) = 0; // Defined as pure virtual function
 };
