@@ -18,35 +18,38 @@
 #include <iostream>
 #include <sstream>
 
-/**
- * @enum KinematicsProperty
- * @brief An enumeration which defines the possible properties in a basic kinematic equation using constant acceleration
- * 
- * For example d = 0.5*at^2 + v_0*t contains the properties distance, acceleration, initial velocity, and time, but not final velocity
- * 
- */
-enum KinematicsProperty 
-{
-  INITIAL_VELOCITY,
-  FINAL_VELOCITY,
-  ACCELERATION,
-  DISTANCE,
-  TIME
-};
+namespace lib_vehicle_model {
 
-/**
- * Overload of << operation so enum objects will output as strings in print functions
- * 
- */ 
-std::ostream& operator<<( std::ostream& os, const KinematicsProperty& prop )
-{
-   switch( prop )
-   {
-      case INITIAL_VELOCITY: os << "INITIAL_VELOCITY"; break;
-      case FINAL_VELOCITY: os << "FINAL_VELOCITY"; break;
-      case ACCELERATION: os << "ACCELERATION"; break;
-      case DISTANCE: os << "DISTANCE"; break;
-      case TIME: os << "TIME"; break;
-      default: os << "ERROR: UNKNOWN TYPE"; break;
-   }
+  /**
+   * @enum KinematicsProperty
+   * @brief An enumeration which defines the possible properties in a basic kinematic equation using constant acceleration
+   * 
+   * For example d = 0.5*at^2 + v_0*t contains the properties distance, acceleration, initial velocity, and time, but not final velocity
+   * 
+   */
+  enum KinematicsProperty 
+  {
+    INITIAL_VELOCITY,
+    FINAL_VELOCITY,
+    ACCELERATION,
+    DISTANCE,
+    TIME
+  };
+
+  /**
+   * Overload of << operation so enum objects will output as strings in print functions
+   * 
+   */ 
+  std::ostream& operator<<( std::ostream& os, const KinematicsProperty& prop )
+  {
+    switch( prop )
+    {
+        case INITIAL_VELOCITY: os << "INITIAL_VELOCITY"; break;
+        case FINAL_VELOCITY: os << "FINAL_VELOCITY"; break;
+        case ACCELERATION: os << "ACCELERATION"; break;
+        case DISTANCE: os << "DISTANCE"; break;
+        case TIME: os << "TIME"; break;
+        default: os << "ERROR: UNKNOWN TYPE"; break;
+    }
+  }
 }

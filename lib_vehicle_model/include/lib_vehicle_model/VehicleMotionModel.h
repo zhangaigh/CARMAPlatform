@@ -20,21 +20,22 @@
 #include "VehicleState.h"
 #include "VehicleMotionPredictor.h"
 
-
-/**
- * @class VehicleMotionModel
- * @brief Interfaces which all implemented vehicle models must adhere to. 
- * 
- * This interface extends the VehicleMotionPredictor by adding a setParameterServer function. 
- */
-class VehicleMotionModel: public virtual VehicleMotionPredictor
-{
-  public:
-    /**
-     * @brief Set the parameter server which will be used by vehicle models
-     * 
-     * @param parameter_server The parameter server to use when a vehicle model is loading parameters
-     * 
-     */
-    virtual void setParameterServer(std::shared_ptr<ParameterServer> parameter_server) = 0; // Defined as pure virtual function
-};
+namespace lib_vehicle_model {
+  /**
+   * @class VehicleMotionModel
+   * @brief Interfaces which all implemented vehicle models must adhere to. 
+   * 
+   * This interface extends the VehicleMotionPredictor by adding a setParameterServer function. 
+   */
+  class VehicleMotionModel: public virtual VehicleMotionPredictor
+  {
+    public:
+      /**
+       * @brief Set the parameter server which will be used by vehicle models
+       * 
+       * @param parameter_server The parameter server to use when a vehicle model is loading parameters
+       * 
+       */
+      virtual void setParameterServer(std::shared_ptr<ParameterServer> parameter_server) = 0; // Defined as pure virtual function
+  };
+}

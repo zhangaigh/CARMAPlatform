@@ -23,6 +23,7 @@
 #include <lib_vehicle_model/VehicleModelControlInput.h>
 #include <lib_vehicle_model/ParameterServer.h>
 
+using namespace lib_vehicle_model;
 
 /**
  * @class MockVehicleModel
@@ -36,7 +37,7 @@ class MockVehicleModel: public VehicleMotionModel
     std::shared_ptr<ParameterServer> param_server_;
 
     // Parameters
-    double example_parm_;
+    double example_param_;
 
   public:
 
@@ -55,6 +56,8 @@ class MockVehicleModel: public VehicleMotionModel
     //
     // Overriden interface functions
     //
+
+    void setParameterServer(std::shared_ptr<ParameterServer> parameter_server) override;
 
     std::vector<VehicleState> predict(VehicleState initial_state,
       double timestep, double delta_t) override; 

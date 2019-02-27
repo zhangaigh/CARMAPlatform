@@ -21,52 +21,54 @@
 #include <memory>
 #include "ParameterServer.h"
 
-/**
- * @class ROSParameterServer
- * @brief A concrete implementation of the ParameterServer interface which uses the ROS parameter server
- * 
- * Supported parameter types match those supported by the ROS 1 C++ parameter interface except for XmlRpc::XmlRpcValue
- */
-class ROSParameterServer: public ParameterServer
-{
-  private:
-    ros::NodeHandle nh_;
-  public:
+namespace lib_vehicle_model {
+  /**
+   * @class ROSParameterServer
+   * @brief A concrete implementation of the ParameterServer interface which uses the ROS parameter server
+   * 
+   * Supported parameter types match those supported by the ROS 1 C++ parameter interface except for XmlRpc::XmlRpcValue
+   */
+  class ROSParameterServer: public ParameterServer
+  {
+    private:
+      ros::NodeHandle nh_;
+    public:
 
-    /**
-     * @brief Constructor
-     * 
-     * @param nh A reference to a ROS node handle which is used to access the parameter server
-     */ 
-    ROSParameterServer(ros::NodeHandle& nh);
+      /**
+       * @brief Constructor
+       * 
+       * @param nh A reference to a ROS node handle which is used to access the parameter server
+       */ 
+      ROSParameterServer(ros::NodeHandle& nh);
 
-    /**
-     * @brief Destructor as required by interface
-     * 
-     */ 
-    ~ROSParameterServer();
+      /**
+       * @brief Destructor as required by interface
+       * 
+       */ 
+      ~ROSParameterServer();
 
-    //
-    // Overriden interface functions
-    //
+      //
+      // Overriden interface functions
+      //
 
-    bool getParam(const std::string& param_key, std::string& output) override;
+      bool getParam(const std::string& param_key, std::string& output) override;
 
-    bool getParam(const std::string& param_key, double& output) override;
+      bool getParam(const std::string& param_key, double& output) override;
 
-    bool getParam(const std::string& param_key, float& output) override;
+      bool getParam(const std::string& param_key, float& output) override;
 
-    bool getParam(const std::string& param_key, int& output) override;
+      bool getParam(const std::string& param_key, int& output) override;
 
-    bool getParam(const std::string& param_key, bool& output) override;
+      bool getParam(const std::string& param_key, bool& output) override;
 
-    bool getParam(const std::string& param_key, std::vector<std::string>& output) override;
+      bool getParam(const std::string& param_key, std::vector<std::string>& output) override;
 
-    bool getParam(const std::string& param_key, std::vector<double>& output) override;
+      bool getParam(const std::string& param_key, std::vector<double>& output) override;
 
-    bool getParam(const std::string& param_key, std::vector<float>& output) override;
+      bool getParam(const std::string& param_key, std::vector<float>& output) override;
 
-    bool getParam(const std::string& param_key, std::vector<int>& output) override;
+      bool getParam(const std::string& param_key, std::vector<int>& output) override;
 
-    bool getParam(const std::string& param_key, std::vector<bool>& output) override;
-};
+      bool getParam(const std::string& param_key, std::vector<bool>& output) override;
+  };
+}

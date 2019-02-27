@@ -19,6 +19,7 @@
 /**
  * Cpp containing the implementation of KinematicsSolver
  */
+using namespace lib_vehicle_model;
 
 double KinematicsSolver::solve(const KinematicsProperty output_prop, const KinematicsProperty unavailable_prop,
    const double prop1, const double prop2, const double prop3) {

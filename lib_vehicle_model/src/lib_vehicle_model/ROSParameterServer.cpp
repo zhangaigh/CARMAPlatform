@@ -21,6 +21,7 @@
 /**
  * Cpp containing the implementation of ROSParameterServer
  */
+using namespace lib_vehicle_model;
 
 // Constructor initializes NodeHandle
 ROSParameterServer::ROSParameterServer(ros::NodeHandle& nh):nh_(nh) {}

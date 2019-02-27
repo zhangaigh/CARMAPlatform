@@ -21,6 +21,7 @@
 /**
  * Cpp containing the implementation of VehicleModelAccessor
  */
+using namespace lib_vehicle_model;
 
 VehicleModelAccessor::VehicleModelAccessor(std::shared_ptr<ParameterServer> parameter_server) {
 

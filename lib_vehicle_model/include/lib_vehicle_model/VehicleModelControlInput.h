@@ -15,22 +15,24 @@
  * the License.
  */
 
-/**
- * @struct VehicleModelControlInput
- * @brief A struct used to define the set of variables used to represent the vehicle control input.
- * 
- * The members of this struct are defined relative to the vehicle state and control models described in the VehicleModelLib documentation
- */
-struct VehicleModelControlInput 
-{
+namespace lib_vehicle_model {
   /**
-   * The target forward acceleration of the vehicle in m/s^2
+   * @struct VehicleModelControlInput
+   * @brief A struct used to define the set of variables used to represent the vehicle control input.
+   * 
+   * The members of this struct are defined relative to the vehicle state and control models described in the VehicleModelLib documentation
    */
-  double target_acceleration;
+  struct VehicleModelControlInput 
+  {
+    /**
+     * The target forward acceleration of the vehicle in m/s^2
+     */
+    double target_acceleration;
 
-  /**
-   * The target steering angle for the front wheel to make with the longitudinal centerline of the vehicle in rad
-   * Left of the centerline is positive
-   */
-  double target_steering_angle;
-};
+    /**
+     * The target steering angle for the front wheel to make with the longitudinal centerline of the vehicle in rad
+     * Left of the centerline is positive
+     */
+    double target_steering_angle;
+  };
+}
