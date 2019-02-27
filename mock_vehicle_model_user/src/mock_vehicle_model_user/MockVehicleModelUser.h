@@ -21,6 +21,8 @@
 #include <lib_vehicle_model/VehicleModelAccessor.h>
 #include <lib_vehicle_model/VehicleState.h>
 #include <lib_vehicle_model/VehicleModelControlInput.h>
+#include <lib_vehicle_model/ParameterServer.h>
+#include <lib_vehicle_model/ROSParameterServer.h>
 
 /**
  * @class MockVehicleModelUser

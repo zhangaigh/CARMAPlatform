@@ -10,6 +10,7 @@ add_compile_options(-std=c++11)
 find_package(catkin REQUIRED COMPONENTS
   lib_vehicle_model
   roscpp
+  std_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -104,7 +105,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES ${PROJECT_NAME}
-  CATKIN_DEPENDS lib_vehicle_model
+#  CATKIN_DEPENDS lib_vehicle_model
 #  DEPENDS system_lib
 )
 
@@ -134,7 +135,10 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(${PROJECT_NAME}_node src/${PROJECT_NAME}/main.cpp src/${PROJECT_NAME}/MockVehicleModelUser.cpp)
+add_executable(${PROJECT_NAME}_node
+  src/${PROJECT_NAME}/main.cpp 
+  src/${PROJECT_NAME}/MockVehicleModelUser.cpp
+)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
