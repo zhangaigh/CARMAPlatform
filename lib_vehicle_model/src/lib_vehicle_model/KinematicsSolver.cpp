@@ -14,7 +14,7 @@
  * the License.
  */
 
-#include "KinematicsSolver.h"
+#include "lib_vehicle_model/KinematicsSolver.h"
 
 /**
  * Cpp containing the implementation of KinematicsSolver

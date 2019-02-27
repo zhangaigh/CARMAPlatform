@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(lib_vehicle_model)
+project(mock_vehicle_model_shared_lib)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 add_compile_options(-std=c++11)
@@ -8,7 +8,7 @@ add_compile_options(-std=c++11)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  roscpp
+  lib_vehicle_model
 )
 
 ## System dependencies are found with CMake's conventions
@@ -103,7 +103,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES ${PROJECT_NAME}
-#  CATKIN_DEPENDS other_catkin_pkg
+  CATKIN_DEPENDS lib_vehicle_model
 #  DEPENDS system_lib
 )
 
@@ -115,16 +115,17 @@ catkin_package(
 ## Your package locations should be listed before other locations
 include_directories(
  include
+ ${lib_vehicle_model_INCLUDE_DIRS}
  ${catkin_INCLUDE_DIRS}
 )
 
+message(STATUS "\n\nPATH ${lib_vehicle_model_INCLUDE_DIRS} \n\n\n" )
+
 ## Declare a C++ library
-add_library(${PROJECT_NAME}
-  src/${PROJECT_NAME}/KinematicsSolver.cpp
-  src/${PROJECT_NAME}/ROSParameterServer.cpp
-  src/${PROJECT_NAME}/VehicleModelAccessor.cpp
-)
-add_dependencies( ${PROJECT_NAME} ${catkin_EXPORTED_TARGETS})
+## Declare as a SHARED library for dynamic linking
+ add_library(${PROJECT_NAME} SHARED
+   src/MockVehicleModel.cpp
+ )
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
@@ -140,16 +141,17 @@ add_dependencies( ${PROJECT_NAME} ${catkin_EXPORTED_TARGETS})
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
 ## e.g. "rosrun someones_pkg node" instead of "rosrun someones_pkg someones_pkg_node"
-# set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME ${PROJECT_NAME} PREFIX "")
+# set_target_properties(${PROJECT_NAME}_node PROPERTIES OUTPUT_NAME node PREFIX "")
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(${PROJECT_NAME}_node
-#   ${catkin_LIBRARIES}
-# )
+target_link_libraries(${PROJECT_NAME}
+  lib_vehicle_model
+  ${catkin_LIBRARIES}
+)
 
 #############
 ## Install ##
@@ -173,11 +175,11 @@ install(TARGETS ${PROJECT_NAME}
 )
 
 ## Mark cpp header files for installation
-install(DIRECTORY include
-  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-  FILES_MATCHING PATTERN "*.h"
-  PATTERN ".svn" EXCLUDE
-)
+ install(DIRECTORY include/${PROJECT_NAME}/
+   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+   FILES_MATCHING PATTERN "*.h"
+   PATTERN ".svn" EXCLUDE
+ )
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
 # install(FILES
@@ -198,3 +200,4 @@ install(DIRECTORY include
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+

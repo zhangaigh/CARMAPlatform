@@ -18,6 +18,7 @@
 #include "ParameterServer.h"
 #include "VehicleModelControlInput.h"
 #include "VehicleState.h"
+#include "VehicleMotionPredictor.h"
 
 
 /**

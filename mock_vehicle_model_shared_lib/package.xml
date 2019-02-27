@@ -1,19 +1,17 @@
 <?xml version="1.0"?>
 <package>
-  <name>lib_vehicle_model</name>
+  <name>mock_vehicle_model_shared_lib</name>
   <version>1.0.0</version>
   <description>
-    The vehicle model library provides a mechanism for modeling vehicle behavior based on real world physical properties of each vehicle.
-    Other components give the model a vehicle starting state and command input or sequence of command inputs
-    and get back an ending state or list of traversed states.
+    Example package demonstrating how to create a vehicle model shared library for use with the lib_vehicle_model package
   </description>
   <maintainer email="carma@todo.todo">carma</maintainer>
   <license>Apache 2.0</license>
   <author email="carma@todo.todo">carma</author>
 
   <buildtool_depend>catkin</buildtool_depend>
-  <build_depend>roscpp</build_depend>
-  <run_depend>roscpp</run_depend>
+  <build_depend>lib_vehicle_model</build_depend>
+  <run_depend>lib_vehicle_model</run_depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>

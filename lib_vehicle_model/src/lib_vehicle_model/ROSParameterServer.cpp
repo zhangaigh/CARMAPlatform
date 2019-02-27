@@ -16,7 +16,7 @@
 
 #include <string>
 #include <vector>
-#include "ROSParameterServer.h"
+#include "lib_vehicle_model/ROSParameterServer.h"
 
 /**
  * Cpp containing the implementation of ROSParameterServer
