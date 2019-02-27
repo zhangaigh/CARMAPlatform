@@ -30,10 +30,10 @@ namespace lib_vehicle_model {
     public:
 
       /**
-       * @brief Pure virtual destructor to ensure delete safety for pointers to implementing classes
+       * @brief Virtual destructor to ensure delete safety for pointers to implementing classes
        * 
        */
-      virtual ~ParameterServer() = 0;
+      virtual ~ParameterServer() {};
 
       /**
        * @brief Get a string value from the parameter server

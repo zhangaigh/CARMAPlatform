@@ -31,10 +31,10 @@ namespace lib_vehicle_model {
     public:
 
       /**
-       * @brief Pure virtual destructor to ensure delete safety for pointers to implementing classes
+       * @brief Virtual destructor to ensure delete safety for pointers to implementing classes
        * 
        */
-      virtual ~VehicleMotionPredictor() = 0;
+      virtual ~VehicleMotionPredictor() {};
 
       /**
        * @brief Predict vehicle motion assuming no change in control input

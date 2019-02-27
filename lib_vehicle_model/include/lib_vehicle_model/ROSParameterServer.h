@@ -31,7 +31,7 @@ namespace lib_vehicle_model {
   class ROSParameterServer: public ParameterServer
   {
     private:
-      ros::NodeHandle nh_;
+      std::shared_ptr<ros::NodeHandle> nh_;
     public:
 
       /**
@@ -39,7 +39,7 @@ namespace lib_vehicle_model {
        * 
        * @param nh A reference to a ROS node handle which is used to access the parameter server
        */ 
-      ROSParameterServer(ros::NodeHandle& nh);
+      ROSParameterServer(std::shared_ptr<ros::NodeHandle> nh);
 
       /**
        * @brief Destructor as required by interface
