@@ -18,11 +18,6 @@
 #include <mutex>
 #include <ros/ros.h>
 #include <std_msgs/String.h>
-#include <lib_vehicle_model/VehicleModelAccessor.h>
-#include <lib_vehicle_model/VehicleState.h>
-#include <lib_vehicle_model/VehicleModelControlInput.h>
-#include <lib_vehicle_model/ParameterServer.h>
-#include <lib_vehicle_model/ROSParameterServer.h>
 #include <lib_vehicle_model/LibVehicleModel.h>
 
 /**
