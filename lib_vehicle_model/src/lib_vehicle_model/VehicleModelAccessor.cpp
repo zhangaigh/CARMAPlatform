@@ -23,7 +23,17 @@
  */
 using namespace lib_vehicle_model;
 
-VehicleModelAccessor::VehicleModelAccessor(std::shared_ptr<ParameterServer> parameter_server) {
+// Initialize members
+bool VehicleModelAccessor::modelLoaded_ = false;
+
+void VehicleModelAccessor::init(std::shared_ptr<ParameterServer> parameter_server) {
+  // Mutex lock to ensure thread safety of lib loading and parameter loading
+  // Since this function is the only place static data members are modified all other functions should be thread safe
+  std::lock_guard<std::mutex> guard(init_mutex); 
+
+  if (modelLoaded_) {
+    throw std::runtime_error("Attempted to load the vehicle model a second time from the same process");
+  }
 
   param_server_ = parameter_server;
 
@@ -48,9 +58,10 @@ VehicleModelAccessor::VehicleModelAccessor(std::shared_ptr<ParameterServer> para
   // Load the vehicle model to be used
   loadModel();
   vehicle_model_->setParameterServer(param_server_);
-}
 
-VehicleModelAccessor::~VehicleModelAccessor() {};
+  // Mark that the model has been loaded
+  modelLoaded_ = true;
+}
 
 void VehicleModelAccessor::loadModel() {
   // Load library from path
@@ -89,6 +100,10 @@ void VehicleModelAccessor::loadModel() {
 std::vector<VehicleState> VehicleModelAccessor::predict(VehicleState initial_state,
   double timestep, double delta_t) {
     
+    if (!modelLoaded_) {
+      throw std::runtime_error("Attempted to use VehicleModelAccessor before model was loaded with call to VehicleModelAccessor.init()");
+    }
+
     // Validate inputs
     if (timestep > delta_t) {
       std::ostringstream msg;
@@ -104,6 +119,10 @@ std::vector<VehicleState> VehicleModelAccessor::predict(VehicleState initial_sta
 std::vector<VehicleState> VehicleModelAccessor::predict(VehicleState initial_state,
   std::vector<VehicleModelControlInput> control_inputs, double timestep) {
 
+    if (!modelLoaded_) {
+      throw std::runtime_error("Attempted to use VehicleModelAccessor before model was loaded with call to VehicleModelAccessor.init()");
+    }
+
     // Validate inputs
     validateInitialState(initial_state);
     validateControlInputs(initial_state, control_inputs, timestep);
@@ -112,68 +131,68 @@ std::vector<VehicleState> VehicleModelAccessor::predict(VehicleState initial_sta
     return vehicle_model_->predict(initial_state, control_inputs, timestep);
   }
 
-  void VehicleModelAccessor::validateInitialState(const VehicleState& initial_state) {
-    std::ostringstream msg;
+void VehicleModelAccessor::validateInitialState(const VehicleState& initial_state) {
+  std::ostringstream msg;
 
-    if (initial_state.steering_angle < min_steering_angle_) {
-      msg << "Invalid initial_state with steering angle: " << initial_state.steering_angle << " is below min of: " << min_steering_angle_;
-      throw std::invalid_argument(msg.str());
-    }
-    
-    if (initial_state.steering_angle > max_steering_angle_) {
-      msg << "Invalid initial_state with steering angle: " << initial_state.steering_angle << " is above max of: " << max_steering_angle_;
-      throw std::invalid_argument(msg.str());
-    }
-
-    if (initial_state.trailer_angle < min_trailer_angle_) {
-      msg << "Invalid initial_state with trailer angle: " << initial_state.trailer_angle << " is below min of: " << min_trailer_angle_;
-      throw std::invalid_argument(msg.str());
-    }
-
-    if (initial_state.trailer_angle > max_trailer_angle_) {
-      msg << "Invalid initial_state with trailer angle: " << initial_state.trailer_angle << " is above max of: " << max_trailer_angle_;
-      throw std::invalid_argument(msg.str());
-    }
-
-  } 
-
-  void VehicleModelAccessor::validateControlInputs(const VehicleState& initial_state, const std::vector<VehicleModelControlInput>& control_inputs, double timestep) {
-
-    // Last steering angle used to compute rate of steering angle change between control inputs
-    double last_steer_angle = initial_state.steering_angle;
-
-    size_t count = 0;
-    std::ostringstream msg;
-    // Validate each control input in sequence
-    for (const VehicleModelControlInput& control : control_inputs) {
-      if (control.target_acceleration < forward_deceleration_limit_) {
-        msg << "Invalid control_input " << count << " with target_acceleration: " << control.target_acceleration << " is below min of: " << forward_deceleration_limit_;
-        throw std::invalid_argument(msg.str());
-      }
-
-      if (control.target_acceleration > forward_acceleration_limit_) {
-        msg << "Invalid control_input " << count << " with target_acceleration: " << control.target_acceleration << " is above max of: " << forward_acceleration_limit_;
-        throw std::invalid_argument(msg.str());
-      }
-
-      if (control.target_steering_angle < min_steering_angle_) {
-        msg << "Invalid control_input " << count << " with target_steering_angle: " << control.target_steering_angle << " is below min of: " << min_steering_angle_;
-        throw std::invalid_argument(msg.str());
-      }
-
-      if (control.target_steering_angle > max_steering_angle_) {
-        msg << "Invalid control_input " << count << " with target_steering_angle: " << control.target_steering_angle << " is above max of: " << max_steering_angle_;
-        throw std::invalid_argument(msg.str());
-      }
-
-      const double delta_steer = control.target_steering_angle - last_steer_angle;
-      const double steering_rate = abs(delta_steer / timestep);
-      if (steering_rate > max_steering_angle_rate_) {
-        msg << "Invalid control_input " << count << " with rate of steering change : " << steering_rate << " is above max of: " << max_steering_angle_rate_;
-        throw std::invalid_argument(msg.str());
-      }
-
-      last_steer_angle = control.target_steering_angle;
-      count++;
-    }
+  if (initial_state.steering_angle < min_steering_angle_) {
+    msg << "Invalid initial_state with steering angle: " << initial_state.steering_angle << " is below min of: " << min_steering_angle_;
+    throw std::invalid_argument(msg.str());
   }
+  
+  if (initial_state.steering_angle > max_steering_angle_) {
+    msg << "Invalid initial_state with steering angle: " << initial_state.steering_angle << " is above max of: " << max_steering_angle_;
+    throw std::invalid_argument(msg.str());
+  }
+
+  if (initial_state.trailer_angle < min_trailer_angle_) {
+    msg << "Invalid initial_state with trailer angle: " << initial_state.trailer_angle << " is below min of: " << min_trailer_angle_;
+    throw std::invalid_argument(msg.str());
+  }
+
+  if (initial_state.trailer_angle > max_trailer_angle_) {
+    msg << "Invalid initial_state with trailer angle: " << initial_state.trailer_angle << " is above max of: " << max_trailer_angle_;
+    throw std::invalid_argument(msg.str());
+  }
+
+} 
+
+void VehicleModelAccessor::validateControlInputs(const VehicleState& initial_state, const std::vector<VehicleModelControlInput>& control_inputs, double timestep) {
+
+  // Last steering angle used to compute rate of steering angle change between control inputs
+  double last_steer_angle = initial_state.steering_angle;
+
+  size_t count = 0;
+  std::ostringstream msg;
+  // Validate each control input in sequence
+  for (const VehicleModelControlInput& control : control_inputs) {
+    if (control.target_acceleration < forward_deceleration_limit_) {
+      msg << "Invalid control_input " << count << " with target_acceleration: " << control.target_acceleration << " is below min of: " << forward_deceleration_limit_;
+      throw std::invalid_argument(msg.str());
+    }
+
+    if (control.target_acceleration > forward_acceleration_limit_) {
+      msg << "Invalid control_input " << count << " with target_acceleration: " << control.target_acceleration << " is above max of: " << forward_acceleration_limit_;
+      throw std::invalid_argument(msg.str());
+    }
+
+    if (control.target_steering_angle < min_steering_angle_) {
+      msg << "Invalid control_input " << count << " with target_steering_angle: " << control.target_steering_angle << " is below min of: " << min_steering_angle_;
+      throw std::invalid_argument(msg.str());
+    }
+
+    if (control.target_steering_angle > max_steering_angle_) {
+      msg << "Invalid control_input " << count << " with target_steering_angle: " << control.target_steering_angle << " is above max of: " << max_steering_angle_;
+      throw std::invalid_argument(msg.str());
+    }
+
+    const double delta_steer = control.target_steering_angle - last_steer_angle;
+    const double steering_rate = abs(delta_steer / timestep);
+    if (steering_rate > max_steering_angle_rate_) {
+      msg << "Invalid control_input " << count << " with rate of steering change : " << steering_rate << " is above max of: " << max_steering_angle_rate_;
+      throw std::invalid_argument(msg.str());
+    }
+
+    last_steer_angle = control.target_steering_angle;
+    count++;
+  }
+}

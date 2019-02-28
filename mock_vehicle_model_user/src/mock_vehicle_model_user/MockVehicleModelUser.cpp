@@ -37,7 +37,7 @@ int MockVehicleModelUser::run() {
 
     lib_vehicle_model::VehicleState state;
     state.x_pos = 10;
-    std::vector<lib_vehicle_model::VehicleState> results = vma_->predict(state, 0.1, 0.2);
+    std::vector<lib_vehicle_model::VehicleState> results = lib_vehicle_model::VehicleModelAccessor::predict(state, 0.1, 0.2);
     std::ostringstream msg;
     msg << "Returned xPos = " << results.at(0).x_pos << " Given input = " << state.x_pos;
     std_msgs::String str_msg;
@@ -63,7 +63,7 @@ void MockVehicleModelUser::initialize() {
 
   // Try to load the vehicle model
   param_server_.reset(new lib_vehicle_model::ROSParameterServer(default_nh_));
-  vma_.reset(new lib_vehicle_model::VehicleModelAccessor(param_server_));
+  lib_vehicle_model::VehicleModelAccessor::init(param_server_);
 }
 
 void MockVehicleModelUser::handleException(const std::exception& e) {

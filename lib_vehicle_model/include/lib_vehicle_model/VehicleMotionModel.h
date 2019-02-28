@@ -18,18 +18,48 @@
 #include "ParameterServer.h"
 #include "VehicleModelControlInput.h"
 #include "VehicleState.h"
-#include "VehicleMotionPredictor.h"
 
 namespace lib_vehicle_model {
   /**
    * @class VehicleMotionModel
    * @brief Interfaces which all implemented vehicle models must adhere to. 
    * 
-   * This interface extends the VehicleMotionPredictor by adding a setParameterServer function. 
    */
-  class VehicleMotionModel: public virtual VehicleMotionPredictor
+  class VehicleMotionModel
   {
     public:
+      /**
+       * @brief Virtual destructor to ensure delete safety for pointers to implementing classes
+       * 
+       */
+      virtual ~VehicleMotionModel() {};
+
+      /**
+       * @brief Predict vehicle motion assuming no change in control input
+       * 
+       * @param initial_state The starting state of the vehicle
+       * @param timestep The time increment between returned traversed states
+       * @param delta_t The time to project the motion forward for
+       * 
+       * @return A list of traversed states seperated by the timestep
+       * 
+       */
+      virtual std::vector<VehicleState> predict(VehicleState initial_state,
+        double timestep, double delta_t) = 0; // Defined as pure virtual function
+
+      /**
+       * @brief Predict vehicle motion given a starting state and list of control inputs
+       * 
+       * @param initial_state The starting state of the vehicle
+       * @param control_inputs A list of control inputs seperated by the provided timestep
+       * @param timestep The time increment between returned traversed states and provided control inputs
+       * 
+       * @return A list of traversed states seperated by the timestep
+       * 
+       */
+      virtual std::vector<VehicleState> predict(VehicleState initial_state,
+        std::vector<VehicleModelControlInput> control_inputs, double timestep) = 0; // Defined as pure virtual function
+      
       /**
        * @brief Set the parameter server which will be used by vehicle models
        * 
