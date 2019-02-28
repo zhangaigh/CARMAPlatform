@@ -43,6 +43,6 @@
     <param name="example_param"              value="$(arg example_param)" />
 
     <!-- Mock Vehicle Model User Node -->
-    <node pkg="sensor_fusion" type="sensor_fusion_node" name="sensor_fusion"/>
+    <node pkg="mock_vehicle_model_user" type="mock_vehicle_model_user_node" name="mock_vehicle_model_user"/>
      
 </launch>

@@ -19,14 +19,25 @@
  */
 
 #include "MockVehicleModelUser.h"
+#include <thread>         // std::this_thread::sleep_for
+#include <chrono>         // std::chrono::seconds
 
 int MockVehicleModelUser::run() {
+  bool goodInit = false;
   // Initialize Node
   try {
+    ROS_INFO_STREAM("Before init");
+    std::this_thread::sleep_for(std::chrono::seconds(1));
     initialize();
+    ROS_INFO_STREAM("After init");
+    goodInit = true;
   }
   catch(const std::exception& e) {
     ROS_ERROR_STREAM("Failed to initialize node with exception: " << e.what());
+  }
+
+  if (goodInit) {
+    ROS_INFO_STREAM("Initialization complete!");
   }
 
   // Continuosly process callbacks for default_nh_ using the GlobalCallbackQueue
