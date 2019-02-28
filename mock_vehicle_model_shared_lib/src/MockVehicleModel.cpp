@@ -19,40 +19,8 @@
 
 
 /**
- * Cpp containing the implementation of MockVehicleModel and Shared Library Access Points
+ * Cpp containing the implementation of MockVehicleModel
  */
-
-/**
- * Shared Lib access points
- * Define functions with C symbols (create/destroy MockVehicleModel instance).
- */ 
-/**
- * @brief Creates a new MockVehicleModel instance and returns a raw pointer to that instance 
- * 
- * This function is the access hook for getting a MockVehicleModel from this shared lib
- * 
- * @return A raw pointer to a new MockVehicleModel instance
- */
-extern "C" MockVehicleModel* create()
-{
-    return new MockVehicleModel;
-}
-
-/**
- * @brief Destroys the MockVehicleModel pointed at by the provided raw pointer and frees up its memory
- * 
- * @param model_ptr A pointer to a valid instance of a MockVehicleModel
- * 
- * This function is the access hook for getting a MockVehicleModel from this shared lib
- */
-extern "C" void destroy(MockVehicleModel* model_ptr)
-{
-   delete model_ptr;
-}
-
-/**
- * MockVehicleModel Methods
- */ 
 
 MockVehicleModel::MockVehicleModel() {};
 

@@ -122,7 +122,8 @@ include_directories(
 ## Declare a C++ library
 ## Declare as a SHARED library for dynamic linking
  add_library(${PROJECT_NAME} SHARED
-   src/MockVehicleModel.cpp
+  src/EntryPoint.cpp
+  src/MockVehicleModel.cpp
  )
 
 ## Add cmake target dependencies of the library
@@ -180,9 +181,8 @@ install(TARGETS ${PROJECT_NAME}
 # )
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
-# install(FILES
-#   # myfile1
-#   # myfile2
+# install(DIRECTORY
+#   launch
 #   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 # )
 
