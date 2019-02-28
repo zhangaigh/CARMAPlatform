@@ -23,6 +23,7 @@
 #include <lib_vehicle_model/VehicleModelControlInput.h>
 #include <lib_vehicle_model/ParameterServer.h>
 #include <lib_vehicle_model/ROSParameterServer.h>
+#include <lib_vehicle_model/LibVehicleModel.h>
 
 /**
  * @class MockVehicleModelUser
@@ -38,7 +39,6 @@ private:
   // Members used in ROS behavior
   int default_spin_rate_ = 1;
   std::shared_ptr<ros::NodeHandle> default_nh_;
-  std::shared_ptr<lib_vehicle_model::ParameterServer> param_server_;
   ros::Publisher exception_alert_pub_;
 public:
   /**

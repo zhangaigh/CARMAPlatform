@@ -122,7 +122,10 @@ include_directories(
 add_library(${PROJECT_NAME}
   src/${PROJECT_NAME}/KinematicsSolver.cpp
   src/${PROJECT_NAME}/ROSParameterServer.cpp
-  src/${PROJECT_NAME}/VehicleModelAccessor.cpp
+  src/${PROJECT_NAME}/LibVehicleModel.cpp
+  src/${PROJECT_NAME}/ModelLoader.cpp
+  src/${PROJECT_NAME}/ConstraintChecker.cpp
+  src/${PROJECT_NAME}/KinematicsProperty.cpp
 )
 add_dependencies( ${PROJECT_NAME} ${catkin_EXPORTED_TARGETS})
 

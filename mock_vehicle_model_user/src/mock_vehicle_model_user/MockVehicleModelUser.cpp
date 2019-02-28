@@ -34,12 +34,13 @@ int MockVehicleModelUser::run() {
   }
   catch(const std::exception& e) {
     ROS_ERROR_STREAM("Failed to initialize node with exception: " << e.what());
+    return -6;
   }
 
   if (goodInit) {
     ROS_INFO_STREAM("Initialization complete!");
   }
-
+  
   // Continuosly process callbacks for default_nh_ using the GlobalCallbackQueue
   ros::Rate r(default_spin_rate_);
   while (ros::ok() && !shutting_down_)
@@ -48,7 +49,7 @@ int MockVehicleModelUser::run() {
 
     lib_vehicle_model::VehicleState state;
     state.x_pos = 10;
-    std::vector<lib_vehicle_model::VehicleState> results = lib_vehicle_model::VehicleModelAccessor::predict(state, 0.1, 0.2);
+    std::vector<lib_vehicle_model::VehicleState> results = lib_vehicle_model::predict(state, 0.1, 0.2);
     std::ostringstream msg;
     msg << "Returned xPos = " << results.at(0).x_pos << " Given input = " << state.x_pos;
     std_msgs::String str_msg;
@@ -73,8 +74,7 @@ void MockVehicleModelUser::initialize() {
   exception_alert_pub_ = default_nh_->advertise<std_msgs::String>("exception_alert", 10, true);
 
   // Try to load the vehicle model
-  param_server_.reset(new lib_vehicle_model::ROSParameterServer(default_nh_));
-  lib_vehicle_model::VehicleModelAccessor::init(param_server_);
+  lib_vehicle_model::init(default_nh_);
 }
 
 void MockVehicleModelUser::handleException(const std::exception& e) {

@@ -22,27 +22,18 @@
 #include <memory>
 #include <stdlib.h>
 #include <sstream>
-#include "VehicleState.h"
-#include "VehicleMotionPredictor.h"
-#include "VehicleMotionModel.h"
-#include "VehicleModelControlInput.h"
-#include "ParameterServer.h"
+#include "lib_vehicle_model/VehicleMotionModel.h"
+
 
 namespace lib_vehicle_model {
   /**
-   * @class VehicleModelAccessor
-   * @brief Class which controls the interface to the dynamically loaded vehicle models used to predict host vehicle motion. 
-   * 
-   * A link to the parameter server is provided in the constructor and this is used to load the appropriate vehicle model. 
-   * When a plugin or guidance component calls the predict functions of the VehicleModelAccessor does basic input validation checks and then passes the request onto the loaded vehicle model. 
+   * @class ConstraintChecker
+   * @brief Class which can validate vehicle states and control inputs
    */
-  class VehicleModelAccessor: public VehicleMotionPredictor
+  class ConstraintChecker
   {
     private:
-      std::shared_ptr<ParameterServer> param_server_;
-
-      // Parameters
-      std::string vehicle_model_lib_path_;
+      // Constraints
       double max_forward_speed_;
       double max_reverse_speed_;
       double forward_acceleration_limit_;
@@ -55,8 +46,8 @@ namespace lib_vehicle_model {
       double max_trailer_angle_;
       double min_trailer_angle_;
 
-      // Vehicle Model
-      std::shared_ptr<VehicleMotionModel> vehicle_model_;
+    public:
+      ConstraintChecker(std::shared_ptr<ParameterServer> parameter_server);
 
       /**
        * @brief Helper function to validate the initial vehicle state for a motion prediction
@@ -76,34 +67,6 @@ namespace lib_vehicle_model {
        * 
        * @throws std::invalid_argument If the initial control inputs are found to be invalid
        */
-      void validateControlInputs(const VehicleState& initial_state, const std::vector<VehicleModelControlInput>& control_inputs, double timestep);  
-
-    public:
-
-      /**
-       * @brief Constructor 
-       * 
-       * @param parameter_server A reference to the parameter server which vehicle models will use to load parameters
-       * 
-       * @throws std::invalid_argument If the model could not be loaded or parameters could not be read
-       * 
-       */ 
-      VehicleModelAccessor(std::shared_ptr<ParameterServer> parameter_server);
-
-      /**
-       * @brief Destructor as required by interface
-       * 
-       */ 
-      ~VehicleModelAccessor();
-
-      //
-      // Overriden interface functions
-      //
-
-      std::vector<VehicleState> predict(VehicleState initial_state,
-        double timestep, double delta_t) override; 
-
-      std::vector<VehicleState> predict(VehicleState initial_state,
-        std::vector<VehicleModelControlInput> control_inputs, double timestep) override;
+      void validateControlInputs(const VehicleState& initial_state, const std::vector<VehicleModelControlInput>& control_inputs, const double timestep); 
   };
 }
