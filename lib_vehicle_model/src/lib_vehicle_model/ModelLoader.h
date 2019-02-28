@@ -27,7 +27,7 @@
 
 namespace lib_vehicle_model {
   /**
-   * @class VehicleModelAccessor
+   * @class ModelLoader
    * @brief Class which can load a vehicle model
    */
   class ModelLoader

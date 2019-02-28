@@ -18,7 +18,6 @@
 #include <string>
 #include <dlfcn.h>
 #include <sstream>
-#include "lib_vehicle_model/VehicleModelAccessor.h"
 #include "lib_vehicle_model/ROSParameterServer.h"
 #include "ModelLoader.h"
 #include "ConstraintChecker.h"
@@ -84,7 +83,7 @@ namespace lib_vehicle_model {
     double timestep, double delta_t) {
       
       if (!modelLoaded_) {
-        throw std::runtime_error("Attempted to use VehicleModelAccessor before model was loaded with call to VehicleModelAccessor.init()");
+        throw std::runtime_error("Attempted to use lib_vehicle_model::predict before model was loaded with call to lib_vehicle_model::init()");
       }
       
       // Validate inputs
@@ -103,7 +102,7 @@ namespace lib_vehicle_model {
     std::vector<VehicleModelControlInput> control_inputs, double timestep) {
 
       if (!modelLoaded_) {
-        throw std::runtime_error("Attempted to use VehicleModelAccessor before model was loaded with call to VehicleModelAccessor.init()");
+        throw std::runtime_error("Attempted to use lib_vehicle_model::predict before model was loaded with call to lib_vehicle_model::init()");
       }
 
       // Validate inputs
