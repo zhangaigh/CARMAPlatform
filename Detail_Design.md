@@ -41,7 +41,7 @@ The following table identifies the documents covering each of the packages.
 |Drivers.DSRC Comms.|[CAV Platform Detailed Design – DSRC OBU Driver](https://usdot-carma.atlassian.net/wiki/spaces/CAR/pages/23330913/CARMA+Project+Documentation?preview=/23330913/38633504/CAV%20Platform%20Detailed%20Design%20-%20DSRC%20OBU%20Driver.docx)
 |Drivers.Position|[CAV Platform Detailed Design – Pinpoint Driver](https://usdot-carma.atlassian.net/wiki/spaces/CAR/pages/23330913/CARMA+Project+Documentation?preview=/23330913/40828970/CAV%20Platform%20Detailed%20Design%20-%20Pinpoint%20Driver.docx)
 |Drivers.Sensor|**Sensitive Document below please contact the CARMA Development Team**
-||CAV Platform Detailed Design – SRX Radar Driver]
+||CAV Platform Detailed Design – SRX Radar Driver
 ||[CAV Platform Detailed Design – Delphi Radar Driver](https://usdot-carma.atlassian.net/wiki/spaces/CAR/pages/23330913/CARMA+Project+Documentation?preview=/23330913/38633509/CAV%20Platform%20Detailed%20Design%20-%20Delphi%20Radar%20Driver.docx)
 |Drivers.CAN|**Sensitive Documents below please contact the CARMA Development Team**
 ||CAV Platform Detailed Design – SRX CAN Driver 
