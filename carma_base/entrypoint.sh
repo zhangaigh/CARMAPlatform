@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #  Copyright (C) 2018-2019 LEIDOS.
 # 
 #  Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -12,9 +14,9 @@
 #  License for the specific language governing permissions and limitations under
 #  the License.
 
-FROM busybox:latest
-
-ADD . /root/vehicle
-VOLUME /opt/carma/vehicle
-
-CMD  cp /root/vehicle/* /opt/carma/vehicle
+# Intialize the CARMA environment by sourcing the necessary ROS shell scripts
+# then run whatever string is passed as argument to this script in that 
+# initialized context. E.g. "entrypoint.sh roslaunch carma saxton_cav_docker.launch"
+# runs "roslaunch carma saxton_cav_docker.launch" after setting up the environment
+# such that ROS and CARMA are on the user's PATH
+source ~/.base-image/init-env.sh; exec "$@"

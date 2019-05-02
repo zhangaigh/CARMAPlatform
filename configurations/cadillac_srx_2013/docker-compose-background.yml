@@ -16,15 +16,14 @@
 version: '2'
 
 services:
-  carma:
-    image: usdot-carma/carma
+  web-ui:
+    image: usdotfhwastol/carma-web-ui:2.8.2
     network_mode: host
-    container_name: carma
+    container_name: web-ui
+    environment:
+      - ROS_IP=192.168.88.10
     volumes_from: 
       - container:carma-config:ro
-    volumes:
-      - /opt/carma/logs:/opt/carma/logs
-      - /opt/carma/.ros:/home/carma/.ros
-      - /opt/carma/vehicle/HostVehicleParams.yaml:/opt/carma/params/HostVehicleParams.yaml
-    stdin_open: true
-    tty: true
+    volumes: 
+      - /var/run/docker.sock:/var/run/docker.sock 
+    restart: always
