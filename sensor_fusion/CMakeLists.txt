@@ -8,6 +8,19 @@ option(BUILD_TEST_INTERFACE_MANAGER "Should the test interface manager be built"
 ## Compile as C++11, supported in ROS Kinetic and newer
 add_compile_options(-std=c++11)
 
+##################################
+## Get CARMA Build Dependencies ##
+##################################
+
+find_package(carma REQUIRED COMPONENTS)
+
+list(APPEND CMAKE_MODULE_PATH "${carma_SOURCE_DIR}")
+include(CARMA_CMake_Utils)
+CONFIGURE_AS_CARMA_PKG()
+
+##########
+
+
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
@@ -63,12 +76,15 @@ add_executable(${PROJECT_NAME}_node ${headers} src/main.cpp src/sensor_fusion.cp
 add_dependencies( ${PROJECT_NAME}_node ${PROJECT_NAME}_gencfg ${catkin_EXPORTED_TARGETS})
 
 add_library(wgs84_utils_library src/wgs84_utils.cpp)
+target_link_libraries(wgs84_utils_library #gcov
+)
 add_dependencies(wgs84_utils_library ${catkin_EXPORTED_TARGETS})
 
 add_library(transform_maintainer_library src/transform_maintainer.cpp)
 add_dependencies( transform_maintainer_library ${catkin_EXPORTED_TARGETS})
 target_link_libraries( transform_maintainer_library
   wgs84_utils_library
+  #gcov # #gcov for unit test code coverage metrics
 )
 
 target_link_libraries(${PROJECT_NAME}_node
@@ -80,7 +96,9 @@ target_link_libraries(${PROJECT_NAME}_node
 
 add_executable(so_to_marker src/so_to_marker.cpp)
 add_dependencies(so_to_marker ${catkin_EXPORTED_TARGETS})
-target_link_libraries(so_to_marker ${catkin_LIBRARIES})
+target_link_libraries(so_to_marker 
+  ${catkin_LIBRARIES}
+)
 
 
 if(${BUILD_TEST_INTERFACE_MANAGER})
@@ -125,7 +143,7 @@ install(DIRECTORY
 ##########
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
-catkin_add_gtest(transform_maintainer_test tests/transform_maintainer_test.cpp)
+catkin_add_gtest(transform_maintainer_test test/transform_maintainer_test.cpp)
 
 target_link_libraries( transform_maintainer_test
         wgs84_utils_library
