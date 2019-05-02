@@ -24,9 +24,10 @@ task wrapper(type: Wrapper) {
 }
 
 apply plugin: 'catkin'
-apply plugin: "jacoco"
 
 allprojects {
+    // Apply jacoco plugin for code coverage reports used by SonarCloud
+    apply plugin: 'jacoco'
     /*
       A github url provides a good standard unique name for your project
       Example below, but you may wish to switch to your own unique url.
@@ -64,7 +65,6 @@ subprojects {
      */
     apply plugin: "ros-java"
     apply plugin: 'checkstyle'
-    apply plugin: "jacoco"
 
 
 
@@ -88,28 +88,22 @@ subprojects {
             junitXml.enabled = false
             html.enabled = true
         }           
+
+        // Set the jacoco reports to be fresh each time
         jacoco {
             append = false
-        }   
-
-        doLast {
-            logger.error('HELLO ----------------------------- \n\n')
-            logger.error(coverageDestinationFile.absolutePath)
-        }
+        } 
     }
 
-
+    // Identify sources of the jacoco reports
     jacocoTestReport {
+        additionalSourceDirs = files(sourceSets.main.allSource.srcDirs)
+        sourceDirectories = files(sourceSets.main.allSource.srcDirs)
+        classDirectories =  files(sourceSets.main.output)
         reports {
-            xml.enabled false
-            csv.enabled false
-            html.destination = coverageDestinationFile
-        }
-    }
-
-    doLast {
-        ext {
-            testRan = file("$buildDir/reports/jacoco").exists()
+            html.enabled = true
+            xml.enabled = true
+            csv.enabled = false
         }
     }
 
@@ -121,14 +115,33 @@ subprojects {
     
 }
 
-task jacocoMerge(type: JacocoMerge) {
-   subprojects.each { subproject ->
-    logger.error(subproject.ext.coverageDestinationFile.absolutePath)
-    logger.error('WORD ----------------------------- \n\n')
-      executionData subproject.tasks.withType(Test) && file(subproject.ext.coverageDestinationFile.absolutePath).exists()
-   } 
-
-   destinationFile = file("$buildDir/reports/allTests/jacoco")
+// Task to collect all generated jacoco reports and place them in the top level build folder
+// Based off method described here https://gist.github.com/aalmiray/e6f54aa4b3803be0bcac
+task jacocoCombinedReport(type: org.gradle.testing.jacoco.tasks.JacocoReport) {
+    // Requires submodule have test task
+    dependsOn = subprojects.test
+    // Set sources and classes to defaults
+    additionalSourceDirs = files(subprojects.sourceSets.main.allSource.srcDirs)
+    sourceDirectories = files(subprojects.sourceSets.main.allSource.srcDirs)
+    classDirectories =  files(subprojects.sourceSets.main.output)
+    executionData = files(subprojects.jacocoTestReport.executionData)
+    // Turn on HTML and XML reports.
+    // The XML report is required by SonarCloud
+    // The default location will put the reports  CARMAPlatform/carmajava/build/reports/jacoco/jacocoCombinedReport
+    reports {
+        html.enabled = true
+        xml.enabled = true
+        csv.enabled = false
+    }
+    // The onlyIf and doFirst lines here cause this to only run for submodules with tests
+    onlyIf = {
+        true
+    }
+    doFirst {
+        executionData = files(executionData.findAll {
+            it.exists()
+        })
+    }
 }
 
 task testReport(type: TestReport) {
